@@ -39,13 +39,15 @@ $result = $stmt->get_result();
     <style>
         /* Modal Styles */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
             justify-content: center;
             align-items: center;
         }
@@ -87,8 +89,8 @@ $result = $stmt->get_result();
         <!-- Sidebar -->
         <div class="sidebar">
             <div>
-                <a href="" class="branding">レスト</a><br>
-                <a href="#" class="company-name"><?php echo htmlspecialchars($restaurant_name); ?></a>
+                <a href="../ownerdash/owner-dash.php" class="branding">レスト</a><br>
+                <a href="../ownerdash/owner-dash.php" class="company-name"><?php echo htmlspecialchars($restaurant_name); ?></a>
             </div>
 
             <div class="sidebar-buttons">
@@ -102,6 +104,7 @@ $result = $stmt->get_result();
             </div>
         </div>
 
+
         <!-- Main Content -->
         <div class="content">
             <h1 style="opacity: 0.6; color: #1b1f46; padding-top: 1rem; padding-left: 1rem;">Menu Management</h1>
@@ -111,7 +114,7 @@ $result = $stmt->get_result();
                     // Loop through each food item
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            ?>
+                    ?>
                             <li>
                                 <div class="box">
                                     <img src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
@@ -120,22 +123,22 @@ $result = $stmt->get_result();
                                         <h4><?php echo htmlspecialchars($row['price']); ?> Tk</h4>
                                         <div style="margin-top: 10px;">
                                             <p><strong>Quantity:</strong> <?php echo htmlspecialchars($row['food_quantity']); ?></p>
-                                            <p><strong>Availability:</strong> 
+                                            <p><strong>Availability:</strong>
                                                 <?php echo $row['availability'] === 'Available' ? '<span style="color: green">Available</span>' : '<span style="color: red;">Unavailable</span>'; ?>
                                             </p>
                                         </div>
-                                        <button type="button" class="open-modal-btn" 
-                                            data-id="<?php echo $row['id']; ?>" 
+                                        <button type="button" class="open-modal-btn"
+                                            data-id="<?php echo $row['id']; ?>"
                                             data-name="<?php echo htmlspecialchars($row['food_name']); ?>"
-                                            data-price="<?php echo htmlspecialchars($row['price']); ?>" 
-                                            data-quantity="<?php echo htmlspecialchars($row['food_quantity']); ?>" 
+                                            data-price="<?php echo htmlspecialchars($row['price']); ?>"
+                                            data-quantity="<?php echo htmlspecialchars($row['food_quantity']); ?>"
                                             data-availability="<?php echo htmlspecialchars($row['availability']); ?>">
                                             Edit Item
                                         </button>
                                     </div>
                                 </div>
                             </li>
-                            <?php
+                    <?php
                         }
                     } else {
                         echo "<p>No menu items found.</p>";
