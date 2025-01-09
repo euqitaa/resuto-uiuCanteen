@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レスト - Register</title>
+    <link rel="stylesheet" href="login-register.css">
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <h1>Register . <span class="res-name">レスト</span></h1>
+            <form action="register.php" method="POST">
+                <div class="textbox-parent">
+                    <div class="textbox">
+                        <input type="text" name="uniId" placeholder="University ID" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+                    </div>
+                    <input type="submit" class="btn" value="Register">
+                </div>
+            </form>
+            <a href="login.html">Already have an account? Login</a>
+        </div>
+    </section>
+    
+</body>
+</html>

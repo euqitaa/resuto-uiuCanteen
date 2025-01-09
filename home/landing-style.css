@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+body{
+    background-color: #f1f3f4;
+    -webkit-font-smoothing : antialiased;
+    font-family: sans-serif;
+}
+li{
+    list-style: none;
+}
+.nav-top{
+    padding: 0rem 5rem 1rem 5rem;
+    align-self: center;
+}
+.nav-list{
+    background-color: white;
+    box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.1);
+    margin: 0;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-decoration: none;
+
+}
+.nav-item{
+    margin-right: 2rem;
+}
+
+.nav-item a{
+    text-decoration: none;
+    color: #1b1f46;
+    opacity: 0.7;
+    transition: all 200ms ease-in;
+}
+.nav-item a:hover{
+    background-color: #edcab650;
+    border: none;
+    color: #fe421b;
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+}
+.nav-logo{
+    text-decoration: none;
+    color: #fe421b;
+    font-family: sans-serif;
+    font-size: 24px;
+    margin-right: auto;
+    margin-left: 2rem;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
+.nav-logo:hover{
+    background-color: #1b1f46;
+    border: none;
+    opacity: 0.6;
+}
+.maindiv{
+    margin: 1rem;
+    padding: 1rem 2rem ;
+
+}
+.content{
+    display: grid;
+    grid-template-columns: 50% auto;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.content .content-left{
+    display: block;
+    width: 100%;
+}
+
+.content .content-left .info {
+    max-width: 100%;  
+    display: flex;
+    flex-direction: column;
+}
+.content .content-left .info h2{
+    font-size: 60px;
+    font-family: sans-serif;
+    margin-bottom: 30px;
+}
+#exp-canteen{
+    padding: 10px 23px;
+    background-color: orangered;
+    color: #f1f2f4;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 18px rgba(255, 69, 0, 0.2);
+    font-weight: bold;
+    
+}
+#exp-canteen:hover{
+    box-shadow: 2px 2px 18px rgba(255, 69, 0, 0.4);
+    transition: all 200ms ease-in;
+    background-color: rgba(255, 69, 0, 0.9);
+}
+.grid{
+    width: 90vw;
+    margin: 2rem;
+    margin-right: auto;
+    padding: 1rem 3rem;
+}
+.content-right{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+}
+.restaurantslist{
+    display: flex;
+    height: 20vh;
+    width: 30vw;
+    border:solid 1px;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    justify-content: space-between;
+}
+.restaurantslist img{
+    margin: 2rem 1rem;
+    float: left;
+    width: 60% ;
+    height: 60%;
+    border-radius: 0.5rem;
+    align-items: left;
+    justify-content: left;
+    object-fit: contain;
+}
+.restaurantslist p{
+    float: right;
+    font-size: 20px;
+    font-family: sans-serif;
+    object-fit: contain;
+}

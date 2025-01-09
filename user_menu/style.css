@@ -1,0 +1,203 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+body{
+    background-color: #f1f3f4;
+    -webkit-font-smoothing : antialiased;
+    font-family: sans-serif;
+}
+li{
+    list-style: none;
+}
+.nav-top{
+    padding: 0rem 5rem 1rem 5rem;
+    align-self: center;
+}
+.nav-list{
+    background-color: white;
+    box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.1);
+    margin: 0;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-decoration: none;
+
+}
+.nav-item{
+    margin-right: 2rem;
+}
+
+.nav-item a{
+    text-decoration: none;
+    color: #1b1f46;
+    opacity: 0.7;
+    transition: all 200ms ease-in;
+}
+.nav-item a:hover{
+    background-color: #edcab650;
+    border: none;
+    color: #fe421b;
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+}
+.nav-logo{
+    text-decoration: none;
+    color: #fe421b;
+    font-family: sans-serif;
+    font-size: 24px;
+    margin-right: auto;
+    margin-left: 2rem;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
+.nav-logo:hover{
+    background-color: #1b1f46;
+    border: none;
+    opacity: 0.6;
+}
+.restaurant-items{
+    padding: 15px 0px;
+    box-shadow: 0 0 10rem rgba(43, 49, 133,0.08);
+}
+.restaurant-items-list-freq{
+    height: fit-content;
+    border: none;
+    display: flexbox;
+    border-color: gray;
+}
+.food-item-button{
+    height: 18dvh;
+    width: 36vw;
+    max-width: 400px;
+    border: 1px;
+    border-style: solid;
+    border-color: rgba(254, 65, 0, 0.3);
+    border-radius: 12px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.food-item-button:hover{
+    transition: 0.3s;
+    background-color: rgba(254, 65, 25, 0.1);
+    box-shadow: 0 0 18px rgba(254,65,25,0.6);
+    opacity: 1.0;
+    -webkit-transition: ease-in-out;
+    
+}
+.restaurant-name-parent{
+    background-color: white;
+    height: 245px;
+    display: flex;
+    padding: 2rem;
+    border-bottom-width: 1px;
+    border-bottom-color: #1b1f46;
+}
+.restaurant-name{
+    height:240px;
+    margin-top: 3rem;
+    padding-top: 2rem;
+}
+#res-name-text{
+    margin-right: 2rem;
+    margin-left: 1rem;
+    font-family: sans-serif;
+    font-size: 32px;
+    align-items: right ;
+    padding: 1rem;
+    position: inherit;
+}
+.restaurant-logo{
+    margin-left: 2rem;
+    height: 160px;
+    width: 160px;
+}
+.restaurant-logo img{
+    height: 160px;
+    width: 160px;
+}
+.res-info{
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.whole-page{
+    padding: 0rem 10rem;
+    max-width: 90vw;
+    align-items: center;
+}
+.food-items{
+    padding-top: 1rem;
+}
+.addfoodbutton{
+    justify-content: right;
+}
+.food-item-button-left{
+    justify-content: left;
+    flex-direction: row;
+}
+.food-item-button-right{
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.foodname{
+    padding-top: 1rem;
+    padding-left: 1rem;
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.foodprice{
+    font-size: 18px;
+    font-weight: light;
+    opacity: 0.8;text-align: left;
+    padding: 0rem 1rem;
+}
+.fooditemlist{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    align-items:flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.fooditemlistthing{
+    padding: 0.5rem;
+}
+.addbutton{
+    background-color: none;
+    border: gray;
+    border-bottom: 2px;
+    font-size: 14px;
+    padding-bottom: 0.5rem;
+
+}
+.addbutton:hover{
+    border: none;
+    box-shadow: 0 0 2px rgba(255, 94, 0,0.6);
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+.res-avail{
+    text-shadow: 0 0 1px rgba(255, 94, 0,0.6);
+    padding: 0rem 2rem;
+}
+.div-foodimage{
+    height: 128px;
+    width: 128px;
+}
+.div-foodimage img{
+    height: 128px;
+    width: 128px;
+    object-fit: contain;
+}
