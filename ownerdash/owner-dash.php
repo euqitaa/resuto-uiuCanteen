@@ -44,7 +44,7 @@ if (!isset($_SESSION['owner_username']) || !isset($_SESSION['restaurant_name']))
 
                 <!-- Menu Management Button -->
                 <button class="sidebar-btn">
-                    <a href="../ownermenumanage/menumanage.html" style="text-decoration: none; color: inherit;">Menu Management</a>
+                    <a href="../ownermenumanage/menumanage.php" style="text-decoration: none; color: inherit;">Menu Management</a>
                 </button>
 
                 <!-- History Button -->

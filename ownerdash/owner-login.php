@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Query to match username (database column remains 'username')
-    $sql = "SELECT id, username, password, restaurant_name FROM owners WHERE username = ?";
+    $sql = "SELECT id, username, password , restaurant_name FROM owners WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $owner_username); // Use owner_username from form
     $stmt->execute();
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password === $owner['password']) {
             $_SESSION['owner_username'] = htmlspecialchars($owner['username']); // Session uses owner_username
             $_SESSION['owner_id'] = $owner['id'];
-            $_SESSION['restaurant_name'] = htmlspecialchars($owner['restaurant_name']);
+            $_SESSION['restaurant_name'] = $owner['restaurant_name'];
 
             session_regenerate_id(true);
             $stmt->close();
