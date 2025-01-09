@@ -31,28 +31,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Sanitize inputs
-    $username = $conn->real_escape_string($username);
-    $password = $conn->real_escape_string($password);
-
-    // Query to check if user exists
-    $sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = $conn->query($sql);
+    // Use prepared statements to check if the user exists
+    $sql = "SELECT id, username, password_hash FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         // Fetch the user's data
         $user = $result->fetch_assoc();
 
         // Verify password (assuming password is hashed)
-        if (password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['password_hash'])) {
             // Login success: Set session variables
-            $_SESSION['username'] = $user['username']; // Changed 'name' to 'username'
+            $_SESSION['username'] = htmlspecialchars($user['username']);
             $_SESSION['user_id'] = $user['id'];
 
             // Regenerate session ID for security
             session_regenerate_id(true);
 
             // Close the database connection before redirecting
+            $stmt->close();
             $conn->close();
 
             // Redirect to index
@@ -60,12 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             // Incorrect password
+            $stmt->close();
             $conn->close();
             header("Location: login.html?error=invalidcredentials");
             exit();
         }
     } else {
         // User not found
+        $stmt->close();
         $conn->close();
         header("Location: login.html?error=invalidcredentials");
         exit();
