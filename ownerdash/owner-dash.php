@@ -36,13 +36,28 @@ if (!isset($_SESSION['owner_username']) || !isset($_SESSION['restaurant_name']))
                     ?>
                 </a>
             </div>
-
             <div class="sidebar-buttons">
-                <button class="sidebar-btn">Orders</button>
-                <button class="sidebar-btn">Menu Management</button>
-                <button class="sidebar-btn">History</button>
-                <button class="sidebar-btn"><a href="logout.php" style="text-decoration: none; color: inherit;">Logout</a></button>
+                <!-- Orders Button -->
+                <button class="sidebar-btn">
+                    <a href="../ownerorders/ownerorders.html" style="text-decoration: none; color: inherit;">Orders</a>
+                </button>
+
+                <!-- Menu Management Button -->
+                <button class="sidebar-btn">
+                    <a href="../ownermenumanage/menumanage.html" style="text-decoration: none; color: inherit;">Menu Management</a>
+                </button>
+
+                <!-- History Button -->
+                <button class="sidebar-btn">
+                    <a href="history.html" style="text-decoration: none; color: inherit;">History</a>
+                </button>
+
+                <!-- Logout Button -->
+                <button class="sidebar-btn">
+                    <a href="logout.php" style="text-decoration: none; color: inherit;">Logout</a>
+                </button>
             </div>
+
             <div class="sidebar-support">
                 <button class="support-btn">Support</button>
             </div>
@@ -61,12 +76,12 @@ if (!isset($_SESSION['owner_username']) || !isset($_SESSION['restaurant_name']))
                 </div>
             </div>
             <div class="dashboard-bottom">
-               <div class="orders-graph">
-                <h2>Orders Graph</h2>
-               </div>
-               <div class="revenue-graph">
-                <h2>Revenue Graph</h2>
-               </div>
+                <div class="orders-graph">
+                    <h2>Orders Graph</h2>
+                </div>
+                <div class="revenue-graph">
+                    <h2>Revenue Graph</h2>
+                </div>
             </div>
         </div>
     </div>
