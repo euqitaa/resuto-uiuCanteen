@@ -20,29 +20,50 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch daily orders and revenue data
 $restaurant_name = $_SESSION['restaurant_name'];
+
+// Fetch all-time total completed orders
+$sql_all_time_orders = "SELECT COUNT(*) as total_completed_orders FROM orders 
+                        WHERE restaurant_name = ? AND status = 'Completed'";
+$stmt_all_time_orders = $conn->prepare($sql_all_time_orders);
+$stmt_all_time_orders->bind_param("s", $restaurant_name);
+$stmt_all_time_orders->execute();
+$result_all_time_orders = $stmt_all_time_orders->get_result();
+$total_completed_orders = $result_all_time_orders->fetch_assoc()['total_completed_orders'] ?? 0;
+
+// Fetch all-time total revenue
+$sql_all_time_revenue = "SELECT SUM(total_price) as total_revenue FROM orders 
+                         WHERE restaurant_name = ? AND status = 'Completed'";
+$stmt_all_time_revenue = $conn->prepare($sql_all_time_revenue);
+$stmt_all_time_revenue->bind_param("s", $restaurant_name);
+$stmt_all_time_revenue->execute();
+$result_all_time_revenue = $stmt_all_time_revenue->get_result();
+$total_revenue = $result_all_time_revenue->fetch_assoc()['total_revenue'] ?? 0;
+
+// Fetch data for the graphs (daily orders and revenue)
 $order_data = [];
 $revenue_data = [];
 $date_labels = [];
 
-$sql = "SELECT DATE(order_date) as order_date, COUNT(*) as total_orders, SUM(total_price) as total_revenue 
-        FROM orders 
-        WHERE restaurant_name = ? 
-        GROUP BY DATE(order_date) 
-        ORDER BY DATE(order_date) ASC";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $restaurant_name);
-$stmt->execute();
-$result = $stmt->get_result();
+$sql_graph = "SELECT DATE(order_date) as order_date, COUNT(*) as total_orders, SUM(total_price) as total_revenue 
+              FROM orders 
+              WHERE restaurant_name = ? 
+              GROUP BY DATE(order_date) 
+              ORDER BY DATE(order_date) ASC";
+$stmt_graph = $conn->prepare($sql_graph);
+$stmt_graph->bind_param("s", $restaurant_name);
+$stmt_graph->execute();
+$result_graph = $stmt_graph->get_result();
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $result_graph->fetch_assoc()) {
     $date_labels[] = $row['order_date'];
     $order_data[] = $row['total_orders'];
     $revenue_data[] = $row['total_revenue'];
 }
 
-$stmt->close();
+$stmt_all_time_orders->close();
+$stmt_all_time_revenue->close();
+$stmt_graph->close();
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -64,11 +85,7 @@ $conn->close();
                 <a href="owner-dash.php" class="company-name">
                     <?php
                     // Display restaurant name
-                    if (isset($_SESSION['restaurant_name'])) {
-                        echo htmlspecialchars($_SESSION['restaurant_name']);
-                    } else {
-                        echo "Restaurant Name Not Set";
-                    }
+                    echo htmlspecialchars($restaurant_name);
                     ?>
                 </a>
             </div>
@@ -102,22 +119,25 @@ $conn->close();
         <div class="content">
             <h2 style="padding-top: 1rem; padding-left: 1rem; opacity: 0.6;">Business Summary</h2>
             <div class="dashboard-top">
+                <!-- All-Time Total Orders -->
                 <div class="total-orders">
                     <h2>Orders</h2>
-                    <p class="order-count">0</p>
+                    <p class="order-count"><?php echo htmlspecialchars($total_completed_orders); ?></p>
                 </div>
+                
+                <!-- All-Time Total Revenue -->
                 <div class="total-revenue">
                     <h2>Revenue</h2>
-                    <p class="sales-count"><span style="opacity: 0.8;">TK</span> 0</p>
+                    <p class="sales-count"><span style="opacity: 0.8;">TK</span> <?php echo htmlspecialchars($total_revenue); ?></p>
                 </div>
             </div>
             <div class="dashboard-bottom">
                 <div class="orders-graph">
-                    <h2>Orders Graph</h2>
+                    <h2 style="margin:20px 0px 10px 20px;">Orders Graph</h2>
                     <canvas id="ordersChart"></canvas> <!-- Orders graph -->
                 </div>
                 <div class="revenue-graph">
-                    <h2>Revenue Graph</h2>
+                    <h2 style="margin:20px 0px 10px 20px;">Revenue Graph</h2>
                     <canvas id="revenueChart"></canvas> <!-- Revenue graph -->
                 </div>
             </div>
@@ -125,7 +145,7 @@ $conn->close();
     </div>
 
     <script>
-        // Get data from PHP
+        // Graph data
         const dateLabels = <?php echo json_encode($date_labels); ?>;
         const orderData = <?php echo json_encode($order_data); ?>;
         const revenueData = <?php echo json_encode($revenue_data); ?>;
@@ -133,39 +153,26 @@ $conn->close();
         // Orders Chart
         const ordersCtx = document.getElementById('ordersChart').getContext('2d');
         new Chart(ordersCtx, {
-            type: 'line', // Line chart
+            type: 'line',
             data: {
-                labels: dateLabels, // X-axis labels (dates)
+                labels: dateLabels,
                 datasets: [{
                     label: 'Daily Orders',
-                    data: orderData, // Y-axis data (orders count)
+                    data: orderData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderWidth: 2,
-                    tension: 0.4 // Smooth curves
+                    tension: 0.4
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        display: true
-                    }
+                    legend: { display: true }
                 },
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Orders'
-                        },
-                        beginAtZero: true
-                    }
+                    x: { title: { display: true, text: 'Date' } },
+                    y: { title: { display: true, text: 'Orders' }, beginAtZero: true }
                 }
             }
         });
@@ -173,12 +180,12 @@ $conn->close();
         // Revenue Chart
         const revenueCtx = document.getElementById('revenueChart').getContext('2d');
         new Chart(revenueCtx, {
-            type: 'bar', // Bar chart
+            type: 'bar',
             data: {
-                labels: dateLabels, // X-axis labels (dates)
+                labels: dateLabels,
                 datasets: [{
                     label: 'Daily Revenue (TK)',
-                    data: revenueData, // Y-axis data (revenue)
+                    data: revenueData,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
@@ -187,24 +194,11 @@ $conn->close();
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        display: true
-                    }
+                    legend: { display: true }
                 },
                 scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Revenue (TK)'
-                        },
-                        beginAtZero: true
-                    }
+                    x: { title: { display: true, text: 'Date' } },
+                    y: { title: { display: true, text: 'Revenue (TK)' }, beginAtZero: true }
                 }
             }
         });
