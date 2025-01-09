@@ -6,8 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>レスト - Login</title>
     <link rel="stylesheet" href="login-register.css">
+    <style>
+        /* Pop-up notification styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 0;
+            }
+        }
+    </style>
 </head>
-</style>
 
 <body>
     <section>
@@ -23,15 +49,31 @@
                     </div>
 
                     <input type="submit" class="btn" value="Login">
-
-
-
                 </div>
-
             </form>
             <a href="register.html">Don't have an account? Register</a>
         </div>
     </section>
+
+    <!-- Pop-up notification -->
+    <div class="popup" id="popup">Invalid username or password!</div>
+
+    <script>
+        // Check if there's an error in the query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        if (error === 'invalidcredentials') {
+            // Display the pop-up
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+
+            // Hide the pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 
 </html>
