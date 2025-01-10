@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2025 at 07:50 PM
+-- Generation Time: Jan 10, 2025 at 08:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,32 +31,70 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `restaurant_name` varchar(100) NOT NULL,
   `customer_name` varchar(100) DEFAULT NULL,
-  `food_items` text NOT NULL,
   `total_price` int(11) NOT NULL,
   `order_date` datetime DEFAULT current_timestamp(),
-  `status` enum('Pending','Completed','Cancelled') DEFAULT 'Pending'
+  `status` enum('Pending','Confirmed','Completed','Cancelled') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `food_items`, `total_price`, `order_date`, `status`) VALUES
-(9, 'Khan\'s Kitchen', 'John Doe', 'Samosa, Burger', 250, '2025-01-01 12:30:00', 'Completed'),
-(10, 'Khan\'s Kitchen', 'Jane Smith', 'Pizza, Coke', 400, '2025-01-02 18:15:00', 'Completed'),
-(11, 'Olympia Cafe', 'Alice Brown', 'Coffee, Croissant', 150, '2025-01-01 09:00:00', 'Completed'),
-(12, 'Neptune Diner', 'Bob Marley', 'Grilled Fish', 500, '2025-01-01 13:45:00', 'Completed'),
-(13, 'Khan\'s Kitchen', 'Mark Taylor', 'Chicken Curry, Rice', 350, '2025-01-02 14:00:00', 'Pending'),
-(14, 'Olympia Cafe', 'Emma Stone', 'Pasta, Garlic Bread', 320, '2025-01-02 19:30:00', 'Completed'),
-(15, 'Neptune Diner', 'Chris Pine', 'Steak, Salad', 700, '2025-01-03 20:00:00', 'Cancelled'),
-(16, 'Khan\'s Kitchen', 'Lucy Liu', 'Biryani, Soda', 300, '2025-01-03 15:00:00', 'Completed'),
-(17, 'Khan\'s Kitchen', 'John Doe', 'Samosa, Burger', 250, '2025-01-10 00:38:08', 'Completed'),
-(18, 'Khan\'s Kitchen', 'Jane Smith', 'Pizza, Coke', 400, '2025-01-10 00:38:08', 'Completed'),
-(19, 'Olympia Cafe', 'Alice Brown', 'Coffee, Croissant', 150, '2025-01-10 00:38:08', 'Completed'),
-(20, 'Neptune Diner', 'Bob Marley', 'Grilled Fish', 500, '2025-01-10 00:38:08', 'Completed'),
-(21, 'Khan\'s Kitchen', 'Mark Taylor', 'Chicken Curry, Rice', 350, '2025-01-10 00:38:08', 'Pending'),
-(22, 'Olympia Cafe', 'Emma Stone', 'Pasta, Garlic Bread', 320, '2025-01-10 00:38:08', 'Pending'),
-(23, 'Neptune Diner', 'Chris Pine', 'Steak, Salad', 700, '2025-01-10 00:38:08', 'Pending');
+INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `order_date`, `status`) VALUES
+(1, 'Khan\'s Kitchen', 'John Doe', 250, '2025-01-01 12:30:00', 'Completed'),
+(2, 'Khan\'s Kitchen', 'Jane Smith', 400, '2025-01-02 18:15:00', 'Completed'),
+(3, 'Olympia Cafe', 'Alice Brown', 150, '2025-01-01 09:00:00', 'Completed'),
+(4, 'Neptune Diner', 'Bob Marley', 500, '2025-01-01 13:45:00', 'Completed'),
+(5, 'Khan\'s Kitchen', 'Mark Taylor', 350, '2025-01-03 14:00:00', 'Cancelled'),
+(6, 'Olympia Cafe', 'Emma Stone', 320, '2025-01-02 19:30:00', 'Pending'),
+(7, 'Neptune Diner', 'Chris Pine', 700, '2025-01-03 20:00:00', 'Cancelled'),
+(8, 'Khan\'s Kitchen', 'Lucy Liu', 300, '2025-01-03 15:00:00', 'Completed'),
+(10, 'Khan\'s Kitchen', 'John Doe', 300, '2025-01-10 12:30:00', 'Completed'),
+(11, 'Khan\'s Kitchen', 'Jane Smith', 500, '2025-01-10 14:00:00', 'Completed'),
+(12, 'Khan\'s Kitchen', 'Alice Brown', 400, '2025-01-10 16:30:00', 'Completed'),
+(25, 'Khan\'s Kitchen', 'Pam Beesly', 300, '2025-01-10 19:00:00', 'Confirmed'),
+(26, 'Khan\'s Kitchen', 'Jim Halpert', 400, '2025-01-10 20:30:00', 'Confirmed'),
+(44, 'Khan\'s Kitchen', 'Michael Scott', 250, '2025-01-10 18:00:00', 'Cancelled');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `food_name` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price_per_unit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `food_name`, `quantity`, `price_per_unit`) VALUES
+(1, 2, 'Pizza', 1, 300),
+(2, 2, 'Coke', 1, 100),
+(3, 3, 'Coffee', 1, 100),
+(4, 3, 'Croissant', 1, 50),
+(5, 4, 'Grilled Fish', 1, 500),
+(6, 5, 'Chicken Curry', 1, 250),
+(7, 5, 'Rice', 1, 100),
+(8, 8, 'Biryani', 1, 250),
+(9, 8, 'Soda', 1, 50),
+(12, 10, 'Samosa', 5, 30),
+(13, 10, 'Tea', 5, 30),
+(14, 11, 'Pizza', 2, 200),
+(15, 11, 'Coke', 2, 50),
+(16, 12, 'Chicken Biryani', 2, 180),
+(17, 12, 'Raita', 2, 20),
+(48, 44, 'Lemonade', 2, 25),
+(57, 44, 'Grilled Sandwich', 2, 100),
+(95, 25, 'Chicken Wrap', 3, 100),
+(104, 26, 'Beef Burger', 2, 150),
+(114, 26, 'Fries', 2, 50);
 
 -- --------------------------------------------------------
 
@@ -102,8 +140,8 @@ CREATE TABLE `restaurants` (
 --
 
 INSERT INTO `restaurants` (`id`, `restaurant_name`, `food_name`, `food_quantity`, `food_image`, `price`, `availability`, `food_category`) VALUES
-(1, 'Khan\'s Kitchen', 'Samosa', 20, 'uploads/istockphoto-1430060145-612x612.jpg', 10, 'Available', 'Snacks'),
-(2, 'Khan\'s Kitchen', 'singara', 15, 'uploads/images.jpeg', 5, 'Available', 'Snacks'),
+(1, 'Khan\'s Kitchen', 'Samosa', 20, 'uploads/istockphoto-1430060145-612x612.jpg', 10, 'Not Available', 'Snacks'),
+(2, 'Khan\'s Kitchen', 'singara', 15, 'uploads/images.jpeg', 5, 'Not Available', 'Snacks'),
 (7, 'Khan\'s Kitchen', 'Samosas', 12, 'uploads/istockphoto-1430060145-612x612.jpg', 12, 'Available', 'Snacks'),
 (9, 'Khan\'s Kitchen', 'steak', 12, 'uploads/images (2).jpeg', 456, 'Available', '14');
 
@@ -145,8 +183,14 @@ INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `restaurant_name` (`restaurant_name`);
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `owners`
@@ -178,7 +222,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `owners`
@@ -203,10 +253,10 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `orders`
+-- Constraints for table `order_details`
 --
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`restaurant_name`) REFERENCES `owners` (`restaurant_name`) ON DELETE CASCADE;
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `restaurants`
