@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['restaurant_name'])) {
-    header("Location: ../ownerdash/owner-login.html");
+    header("Location: owner-login.html");
     exit();
 }
 
@@ -23,11 +23,10 @@ if ($conn->connect_error) {
 // Fetch restaurant name
 $restaurant_name = $_SESSION['restaurant_name'];
 
-// Determine which orders to show based on the status filter
-$order_status = isset($_GET['status']) ? $_GET['status'] : 'Pending'; // Default to Pending
-$sql_orders = "SELECT * FROM orders WHERE restaurant_name = ? AND status = ?";
+// Fetch all orders for the restaurant
+$sql_orders = "SELECT * FROM orders WHERE restaurant_name = ?";
 $stmt_orders = $conn->prepare($sql_orders);
-$stmt_orders->bind_param("ss", $restaurant_name, $order_status);
+$stmt_orders->bind_param("s", $restaurant_name);
 $stmt_orders->execute();
 $result_orders = $stmt_orders->get_result();
 ?>
@@ -37,8 +36,8 @@ $result_orders = $stmt_orders->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders Management - レスト</title>
-    <link rel="stylesheet" href="ownerorders-style.css">
+    <title>Order History - レスト</title>
+    <link rel="stylesheet" href="../ownerorders/ownerorders-style.css">
     <style>
         .status-pending {
             color: green;
@@ -49,15 +48,11 @@ $result_orders = $stmt_orders->get_result();
         }
 
         .status-completed {
-            color: blue;
+            color: green;
         }
 
         .status-cancelled {
             color: red;
-        }
-
-        .order-actions {
-            margin-top: 1rem;
         }
     </style>
 </head>
@@ -66,15 +61,15 @@ $result_orders = $stmt_orders->get_result();
     <div class="container">
         <div class="sidebar">
             <div>
-                <a href="../ownerdash/owner-dash.php" class="branding">レスト</a><br>
-                <a href="../ownerdash/owner-dash.php" class="company-name"><?php echo htmlspecialchars($restaurant_name); ?></a>
+                <a href="owner-dash.php" class="branding">レスト</a><br>
+                <a href="owner-dash.php" class="company-name"><?php echo htmlspecialchars($restaurant_name); ?></a>
             </div>
 
             <div class="sidebar-buttons">
-                <button class="sidebar-btn"><a href="ownerorders.php?status=Pending" style="text-decoration: none; color: inherit;">Pending</a></button>
-                <button class="sidebar-btn"><a href="ownerorders.php?status=Confirmed" style="text-decoration: none; color: inherit;">Confirmed</a></button>
-                <button class="sidebar-btn"><a href="ownerorders.php?status=Completed" style="text-decoration: none; color: inherit;">Completed</a></button>
-                <button class="sidebar-btn"><a href="ownerorders.php?status=Cancelled" style="text-decoration: none; color: inherit;">Cancelled</a></button>
+                <button class="sidebar-btn"><a href="..\ownerorders\ownerorders.php?status=Pending" style="text-decoration: none; color: inherit;">Orders</a></button>
+                <button class="sidebar-btn"><a href="..\ownermenumanage\menumanage.php" style="text-decoration: none; color: inherit;">Menu Management</a></button>
+                <button class="sidebar-btn"><a href="history.php" style="text-decoration: none; color: inherit;">History</a></button>
+                <button class="sidebar-btn"><a href="logout.php" style="text-decoration: none; color: inherit;">Logout</a></button>
             </div>
             <div class="sidebar-support">
                 <button class="support-btn">Support</button>
@@ -82,7 +77,7 @@ $result_orders = $stmt_orders->get_result();
         </div>
 
         <div class="content">
-            <h1 style="opacity: 0.6; color: #1b1f46; padding-top: 1rem; padding-left: 1rem;">Orders Management</h1>
+            <h1 style="opacity: 0.6; color: #1b1f46; padding-top: 1rem; padding-left: 1rem;">Order History</h1>
             <div class="orders-list">
                 <div class="order-bottom">
                     <ul class="orderlist">
@@ -95,6 +90,7 @@ $result_orders = $stmt_orders->get_result();
                                         <p style="padding-bottom:0.5rem; opacity: 0.7;">Order number: <label for=""><?php echo $order['id']; ?></label></p>
                                         <p>Customer name: <label for=""><?php echo htmlspecialchars($order['customer_name']); ?></label></p>
                                         <p>Order total: <label for="">Tk <?php echo htmlspecialchars($order['total_price']); ?></label></p>
+                                        <p>Order date: <label for=""><?php echo htmlspecialchars($order['order_date']); ?></label></p>
                                     </div>
                                     <div>
                                         <p style="padding-bottom:0.5rem; opacity: 0.7;">Order details:</p>
@@ -126,20 +122,11 @@ $result_orders = $stmt_orders->get_result();
                                             <?php } ?>
                                         </p>
                                     </div>
-                                    <?php if ($order['status'] === 'Pending') { ?>
-                                        <div class="order-actions">
-                                            <form method="POST" action="update-order-status.php">
-                                                <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
-                                                <button type="submit" name="action" value="Confirm" class="confirm-btn">Confirm</button>
-                                                <button type="submit" name="action" value="Decline" class="decline-btn">Decline</button>
-                                            </form>
-                                        </div>
-                                    <?php } ?>
                                 </li>
                                 <?php
                             }
                         } else {
-                            echo "<p>No orders found for this status.</p>";
+                            echo "<p>No order history found for this restaurant.</p>";
                         }
                         $stmt_orders->close();
                         ?>

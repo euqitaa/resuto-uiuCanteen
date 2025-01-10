@@ -102,7 +102,7 @@ $conn->close();
 
                 <!-- History Button -->
                 <button class="sidebar-btn">
-                    <a href="history.html" style="text-decoration: none; color: inherit;">History</a>
+                    <a href="history.php" style="text-decoration: none; color: inherit;">History</a>
                 </button>
 
                 <!-- Logout Button -->
