@@ -38,7 +38,8 @@ $loggedIn = isset($_SESSION['username']);
                     <div class="info">
                         <h2>welcome to <br><span style="color: #fe4119; text-shadow: 0 0 0.5rem #fe4119;">レスト</span></h2>
                     </div>
-                    <button id="exp-canteen">Explore Canteen</button>
+                    <button id="exp-canteen" onclick="window.location.href='restaurants.php'">Explore Canteen</button>
+
                     
                 </div>
                 <!-- restaurants-->

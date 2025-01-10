@@ -4,7 +4,7 @@ session_start();
 
 // Redirect if not logged in
 if (!isset($_SESSION['restaurant_name'])) {
-    header("Location: owner-login.html");
+    header("Location: ../onwnerdash/owner-login.html");
     exit();
 }
 
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $food_category = $_POST['food_category'];
 
     // Handle file upload for food image
-    $target_dir = "uploads/";
+    $target_dir = "../resources/";
     if (!is_dir($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
