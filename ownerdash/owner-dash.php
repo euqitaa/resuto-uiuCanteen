@@ -92,7 +92,7 @@ $conn->close();
             <div class="sidebar-buttons">
                 <!-- Orders Button -->
                 <button class="sidebar-btn">
-                    <a href="../ownerorders/ownerorders.html" style="text-decoration: none; color: inherit;">Orders</a>
+                    <a href="../ownerorders/ownerorders.php" style="text-decoration: none; color: inherit;">Orders</a>
                 </button>
 
                 <!-- Menu Management Button -->

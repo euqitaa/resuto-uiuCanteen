@@ -94,8 +94,8 @@ $result = $stmt->get_result();
             </div>
 
             <div class="sidebar-buttons">
-                <button class="sidebar-btn"><a href="owner-orders.html" style="text-decoration: none; color: inherit;">Orders</a></button>
-                <button class="sidebar-btn"><a href="menumanage.php" style="text-decoration: none; color: inherit;">Menu Management</a></button>
+                <button class="sidebar-btn"><a href="..\ownerorders\ownerorders.php" style="text-decoration: none; color: inherit;">Orders</a></button>
+                <button class="sidebar-btn"><a href="..\ownermenumanage\menumanage.php" style="text-decoration: none; color: inherit;">Menu Management</a></button>
                 <button class="sidebar-btn"><a href="history.html" style="text-decoration: none; color: inherit;">History</a></button>
                 <button class="sidebar-btn"><a href="make-items.php" style="text-decoration: none; color: inherit;">➕ Add Items</a></button>
             </div>
