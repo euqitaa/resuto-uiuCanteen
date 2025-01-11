@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2025 at 08:40 AM
+-- Generation Time: Jan 11, 2025 at 04:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,7 @@ CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
+  `room_number` varchar(50) DEFAULT NULL,
   `restaurant_name` varchar(100) NOT NULL,
   `food_name` varchar(100) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -44,9 +45,35 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`id`, `username`, `phone_number`, `restaurant_name`, `food_name`, `quantity`, `price_per_unit`, `added_at`, `status`) VALUES
-(1, 'emad', NULL, 'Khan\'s Kitchen', 'Steak', 2, 544, '2025-01-11 13:35:10', 'Pending'),
-(2, 'emad', NULL, 'Olympia Cafe', 'random', 2, 54, '2025-01-11 13:40:17', 'Pending');
+INSERT INTO `cart` (`id`, `username`, `phone_number`, `room_number`, `restaurant_name`, `food_name`, `quantity`, `price_per_unit`, `added_at`, `status`) VALUES
+(5, 'emad', NULL, NULL, 'Eastern housing', 'sada', 1, 50, '2025-01-11 20:38:21', 'Ordered'),
+(6, 'emad', NULL, NULL, 'Eastern housing', 'fasf', 4, 453, '2025-01-11 20:38:27', 'Ordered'),
+(7, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 4, 544, '2025-01-11 20:44:14', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `check_for_rider`
+--
+
+CREATE TABLE `check_for_rider` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `restaurant_name` varchar(100) NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `room_number` varchar(50) NOT NULL,
+  `total_price` int(11) NOT NULL,
+  `status` enum('Awaiting','Pending','Confirmed','Cancelled') DEFAULT 'Awaiting',
+  `added_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `check_for_rider`
+--
+
+INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `added_at`) VALUES
+(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Awaiting', '2025-01-11 20:38:36');
 
 -- --------------------------------------------------------
 
@@ -57,31 +84,20 @@ INSERT INTO `cart` (`id`, `username`, `phone_number`, `restaurant_name`, `food_n
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `restaurant_name` varchar(100) NOT NULL,
-  `customer_name` varchar(100) DEFAULT NULL,
+  `customer_name` varchar(100) NOT NULL,
   `total_price` int(11) NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `room_number` varchar(50) NOT NULL,
   `order_date` datetime DEFAULT current_timestamp(),
-  `status` enum('Pending','Confirmed','Completed','Cancelled') NOT NULL
+  `status` enum('Awaiting','Pending','Confirmed','Completed','Cancelled') DEFAULT 'Awaiting'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `order_date`, `status`) VALUES
-(1, 'Khan\'s Kitchen', 'John Doe', 250, '2025-01-01 12:30:00', 'Completed'),
-(2, 'Khan\'s Kitchen', 'Jane Smith', 400, '2025-01-02 18:15:00', 'Completed'),
-(3, 'Olympia Cafe', 'Alice Brown', 150, '2025-01-01 09:00:00', 'Completed'),
-(4, 'Neptune Diner', 'Bob Marley', 500, '2025-01-01 13:45:00', 'Completed'),
-(5, 'Khan\'s Kitchen', 'Mark Taylor', 350, '2025-01-03 14:00:00', 'Cancelled'),
-(6, 'Olympia Cafe', 'Emma Stone', 320, '2025-01-02 19:30:00', 'Pending'),
-(7, 'Neptune Diner', 'Chris Pine', 700, '2025-01-03 20:00:00', 'Cancelled'),
-(8, 'Khan\'s Kitchen', 'Lucy Liu', 300, '2025-01-03 15:00:00', 'Completed'),
-(10, 'Khan\'s Kitchen', 'John Doe', 300, '2025-01-10 12:30:00', 'Completed'),
-(11, 'Khan\'s Kitchen', 'Jane Smith', 500, '2025-01-10 14:00:00', 'Completed'),
-(12, 'Khan\'s Kitchen', 'Alice Brown', 400, '2025-01-10 16:30:00', 'Completed'),
-(25, 'Khan\'s Kitchen', 'Pam Beesly', 300, '2025-01-10 19:00:00', 'Confirmed'),
-(26, 'Khan\'s Kitchen', 'Jim Halpert', 400, '2025-01-10 20:30:00', 'Confirmed'),
-(44, 'Khan\'s Kitchen', 'Michael Scott', 250, '2025-01-10 18:00:00', 'Cancelled');
+INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `phone_number`, `room_number`, `order_date`, `status`) VALUES
+(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Awaiting');
 
 -- --------------------------------------------------------
 
@@ -102,26 +118,8 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `food_name`, `quantity`, `price_per_unit`) VALUES
-(1, 2, 'Pizza', 1, 300),
-(2, 2, 'Coke', 1, 100),
-(3, 3, 'Coffee', 1, 100),
-(4, 3, 'Croissant', 1, 50),
-(5, 4, 'Grilled Fish', 1, 500),
-(6, 5, 'Chicken Curry', 1, 250),
-(7, 5, 'Rice', 1, 100),
-(8, 8, 'Biryani', 1, 250),
-(9, 8, 'Soda', 1, 50),
-(12, 10, 'Samosa', 5, 30),
-(13, 10, 'Tea', 5, 30),
-(14, 11, 'Pizza', 2, 200),
-(15, 11, 'Coke', 2, 50),
-(16, 12, 'Chicken Biryani', 2, 180),
-(17, 12, 'Raita', 2, 20),
-(48, 44, 'Lemonade', 2, 25),
-(57, 44, 'Grilled Sandwich', 2, 100),
-(95, 25, 'Chicken Wrap', 3, 100),
-(104, 26, 'Beef Burger', 2, 150),
-(114, 26, 'Fries', 2, 50);
+(1, 1, 'sada', 1, 50),
+(2, 1, 'fasf', 4, 453);
 
 -- --------------------------------------------------------
 
@@ -183,6 +181,27 @@ INSERT INTO `restaurants` (`id`, `restaurant_name`, `food_name`, `food_quantity`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `riders`
+--
+
+CREATE TABLE `riders` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `availability` enum('Available','Busy') DEFAULT 'Available'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `riders`
+--
+
+INSERT INTO `riders` (`id`, `username`, `password`, `phone_number`, `availability`) VALUES
+(1, 'a', 'a', '012', 'Available');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -222,6 +241,13 @@ ALTER TABLE `cart`
   ADD KEY `restaurant_name` (`restaurant_name`);
 
 --
+-- Indexes for table `check_for_rider`
+--
+ALTER TABLE `check_for_rider`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -250,6 +276,13 @@ ALTER TABLE `restaurants`
   ADD KEY `restaurant_name` (`restaurant_name`);
 
 --
+-- Indexes for table `riders`
+--
+ALTER TABLE `riders`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -264,19 +297,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `check_for_rider`
+--
+ALTER TABLE `check_for_rider`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `owners`
@@ -289,6 +328,12 @@ ALTER TABLE `owners`
 --
 ALTER TABLE `restaurants`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `riders`
+--
+ALTER TABLE `riders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -305,6 +350,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`restaurant_name`) REFERENCES `restaurants` (`restaurant_name`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `check_for_rider`
+--
+ALTER TABLE `check_for_rider`
+  ADD CONSTRAINT `check_for_rider_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`
