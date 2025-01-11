@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2025 at 04:25 PM
+-- Generation Time: Jan 11, 2025 at 04:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,6 +65,7 @@ CREATE TABLE `check_for_rider` (
   `room_number` varchar(50) NOT NULL,
   `total_price` int(11) NOT NULL,
   `status` enum('Awaiting','Pending','Confirmed','Cancelled') DEFAULT 'Awaiting',
+  `rider_username` varchar(255) DEFAULT NULL,
   `added_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,8 +73,8 @@ CREATE TABLE `check_for_rider` (
 -- Dumping data for table `check_for_rider`
 --
 
-INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `added_at`) VALUES
-(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Awaiting', '2025-01-11 20:38:36');
+INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `rider_username`, `added_at`) VALUES
+(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Pending', 'a', '2025-01-11 20:38:36');
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `phone_number`, `room_number`, `order_date`, `status`) VALUES
-(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Awaiting');
+(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Pending');
 
 -- --------------------------------------------------------
 
