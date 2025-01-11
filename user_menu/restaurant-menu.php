@@ -4,13 +4,13 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: ..\home\login.html");
+    header("Location: ../home/login.html");
     exit();
 }
 
 // Get the restaurant name from the URL
 if (!isset($_GET['restaurant'])) {
-    header("Location: ..\home\restaurants.php");
+    header("Location: ../home/restaurants.php");
     exit();
 }
 
@@ -28,7 +28,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch only available food items for the selected restaurant
+// Fetch food items for the selected restaurant
 $sql = "SELECT food_name, food_image, price, food_quantity 
         FROM restaurants 
         WHERE restaurant_name = ? AND availability = 'Available'";
@@ -52,10 +52,10 @@ $result = $stmt->get_result();
     <section class="nav-top">
         <navbar>
             <ul class="nav-list">
-                <li class="nav-logo"> <a href="..\home\index.php">レスト</a> </li>
+                <li class="nav-logo"> <a href="../home/index.php">レスト</a> </li>
                 <li class="nav-item"> <a href="">📌Location</a> </li>
                 <li class="nav-item">👋 Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</li>
-                <li class="nav-item"> <a href="cart.php">🛒Cart</a></li>
+                <li class="nav-item"> <a href="..\cart\cart.php">🛒Cart</a></li>
             </ul>
         </navbar>
     </section>
@@ -65,7 +65,7 @@ $result = $stmt->get_result();
         <div class="res-info">
             <div class="restaurant-logo">
                 <!-- Use the first food image as the placeholder logo -->
-                <img class="res-logo" style="object-fit: contain; width:300px;```php" src="<?php echo htmlspecialchars($result->fetch_assoc()['food_image'] ?? 'placeholder.jpg'); ?>" alt="Restaurant Logo">
+                <img class="res-logo" src="<?php echo htmlspecialchars($result->fetch_assoc()['food_image'] ?? 'placeholder.jpg'); ?>" alt="Restaurant Logo">
             </div>
             <div class="restaurant-name">
                 <h1 id="res-name-text"><?php echo htmlspecialchars($restaurant_name); ?></h1>
@@ -100,10 +100,10 @@ $result = $stmt->get_result();
                                     </div>
                                     <div class="food-item-button-right">
                                         <div class="div-foodimage">
-                                            <img style="object-fit: contain; object-position:top;" src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
+                                            <img src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
                                         </div>
                                         <div class="addfoodbutton">
-                                            <button class="addbutton">➕🛒 Add to Cart</button>
+                                            <a href="add-to-cart.php?food_name=<?php echo urlencode($row['food_name']); ?>&restaurant=<?php echo urlencode($restaurant_name); ?>" class="addbutton">➕🛒 Add to Cart</a>
                                         </div>
                                     </div>
                                 </div>

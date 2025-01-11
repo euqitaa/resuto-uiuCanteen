@@ -2,20 +2,20 @@
 // Start session
 session_start();
 
-// Check if user is logged in
+// Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: ..\home\login.html");
+    header("Location: ../home/login.html");
     exit();
 }
 
-// Check if food_name and restaurant_name are provided in GET request
-if (!isset($_GET['food_name']) || !isset($_GET['restaurant_name'])) {
-    header("Location: ..\home\restaurants.php");
+// Get food and restaurant details from GET parameters
+if (!isset($_GET['food_name']) || !isset($_GET['restaurant'])) {
+    header("Location: ../home/restaurants.php");
     exit();
 }
 
 $food_name = urldecode($_GET['food_name']);
-$restaurant_name = urldecode($_GET['restaurant_name']);
+$restaurant_name = urldecode($_GET['restaurant']);
 
 // Database connection
 $servername = "localhost";
@@ -24,11 +24,12 @@ $password = "";
 $dbname = "uiu-canteen";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch food details
+// Fetch food details for the selected item
 $sql = "SELECT food_name, food_image, price, food_quantity 
         FROM restaurants 
         WHERE restaurant_name = ? AND food_name = ?";
@@ -36,75 +37,50 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $restaurant_name, $food_name);
 $stmt->execute();
 $result = $stmt->get_result();
-$food = $result->fetch_assoc();
+$food_item = $result->fetch_assoc();
 
-// If food not found, redirect back
-if (!$food) {
-    $stmt->close();
-    $conn->close();
-    header("Location: ..\home\restaurants.php");
+if (!$food_item) {
+    header("Location: ../home/restaurants.php");
     exit();
 }
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $selected_quantity = (int)$_POST['quantity'];
-
-    // Ensure quantity is valid
-    if ($selected_quantity <= 0 || $selected_quantity > $food['food_quantity']) {
-        $error = "Invalid quantity selected!";
-    } else {
-        // Insert into cart table
-        $username = $_SESSION['username'];
-        $price = $food['price'];
-        $total_price = $price * $selected_quantity;
-
-        $insert_sql = "INSERT INTO cart (username, restaurant_name, food_name, quantity, price, total_price)
-                       VALUES (?, ?, ?, ?, ?, ?)";
-        $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("sssiii", $username, $restaurant_name, $food_name, $selected_quantity, $price, $total_price);
-
-        if ($insert_stmt->execute()) {
-            $insert_stmt->close();
-            $stmt->close();
-            $conn->close();
-            header("Location: restaurant-menu.php?restaurant=" . urlencode($restaurant_name));
-            exit();
-        } else {
-            $error = "Failed to add to cart. Please try again.";
-        }
-    }
-}
+$stmt->close();
+$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add to Cart - レスト</title>
+    <title>Add to Cart</title>
     <link rel="stylesheet" href="add-to-cart.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Add to Cart</h1>
-        <?php if (isset($error)): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php endif; ?>
-        <div class="food-details">
-            <img src="<?php echo htmlspecialchars($food['food_image']); ?>" alt="<?php echo htmlspecialchars($food['food_name']); ?>">
-            <h2><?php echo htmlspecialchars($food['food_name']); ?></h2>
-            <p>Price: <?php echo htmlspecialchars($food['price']); ?> Tk</p>
-            <p>Available Quantity: <?php echo htmlspecialchars($food['food_quantity']); ?></p>
-        </div>
-        <form action="" method="POST">
+        <form action="save-to-cart.php" method="POST">
+            <label for="food_name">Food Name:</label>
+            <input type="text" id="food_name" name="food_name" value="<?php echo htmlspecialchars($food_item['food_name']); ?>" readonly>
+
+            <img src="<?php echo htmlspecialchars($food_item['food_image']); ?>" alt="Food Image" style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 15px;">
+
+            <label for="price">Price (per unit):</label>
+            <input type="text" id="price" name="price" value="<?php echo htmlspecialchars($food_item['price']); ?> Tk" readonly>
+
+            <label for="available_quantity">Available Quantity:</label>
+            <input type="text" id="available_quantity" name="available_quantity" value="<?php echo htmlspecialchars($food_item['food_quantity']); ?>" readonly>
+
             <label for="quantity">Select Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" max="<?php echo htmlspecialchars($food['food_quantity']); ?>" required>
-            <div class="form-buttons">
-                <button type="submit">Save</button>
-                <a class="cancel-button" href="restaurant-menu.php?restaurant=<?php echo urlencode($restaurant_name); ?>">Cancel</a>
-            </div>
+            <input type="number" id="quantity" name="quantity" min="1" max="<?php echo htmlspecialchars($food_item['food_quantity']); ?>" required>
+
+            <input type="hidden" name="restaurant_name" value="<?php echo htmlspecialchars($restaurant_name); ?>">
+
+            <button type="submit" class="btn">Save to Cart</button>
+            <a href="restaurant-menu.php?restaurant=<?php echo urlencode($restaurant_name); ?>" class="btn cancel">Cancel</a>
         </form>
     </div>
 </body>
+
 </html>
