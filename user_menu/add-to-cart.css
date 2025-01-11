@@ -1,0 +1,33 @@
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+form button, .cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+form button {
+    background-color: #fe421b;
+    color: white;
+}
+
+form button:hover {
+    background-color: #d63b15;
+}
+
+.cancel-button {
+    background-color: #ddd;
+    color: black;
+    text-decoration: none;
+}
+
+.cancel-button:hover {
+    background-color: #bbb;
+}

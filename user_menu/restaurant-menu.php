@@ -28,10 +28,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch food items for the selected restaurant
-$sql = "SELECT food_name, food_image, price, availability, food_quantity 
+// Fetch only available food items for the selected restaurant
+$sql = "SELECT food_name, food_image, price, food_quantity 
         FROM restaurants 
-        WHERE restaurant_name = ?";
+        WHERE restaurant_name = ? AND availability = 'Available'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $restaurant_name);
 $stmt->execute();
@@ -87,7 +87,6 @@ $result = $stmt->get_result();
                     $result->data_seek(0); // Reset the result pointer
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            $availability = $row['availability'] === 'Available' ? 'Available' : 'Not Available';
                             ?>
                             <li class="fooditemlistthing">
                                 <div class="food-item-button">
@@ -104,11 +103,7 @@ $result = $stmt->get_result();
                                             <img style="object-fit: contain; object-position:top;" src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
                                         </div>
                                         <div class="addfoodbutton">
-                                            <?php if ($availability === 'Available'): ?>
-                                                <button class="addbutton">➕🛒 Add to Cart</button>
-                                            <?php else: ?>
-                                                <p style="color: red; font-weight: bold;">Unavailable</p>
-                                            <?php endif; ?>
+                                            <button class="addbutton">➕🛒 Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>
