@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows === 1) {
         // Successful login
         $_SESSION['rider_username'] = $username;
-        header("Location: rider-dashboard.php"); // Redirect to rider dashboard
+        header("Location: deliverymanfront.php"); // Redirect to rider dashboard
         exit();
     } else {
         // Invalid credentials
