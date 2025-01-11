@@ -27,7 +27,7 @@ $loggedIn = isset($_SESSION['username']);
                     <li class="nav-item"> <a href="login.html">👤Login</a> </li>
                 <?php endif; ?>
 
-                <li class="nav-item"> <a href="..\cart\cart.html">🛒Cart</a></li>
+                <li class="nav-item"> <a href="..\cart\cart.php">🛒Cart</a></li>
             </ul>
         </navbar>
     </section>

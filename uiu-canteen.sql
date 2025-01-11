@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2025 at 08:30 AM
+-- Generation Time: Jan 11, 2025 at 08:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `uiu-canteen`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `phone_number` varchar(15) DEFAULT NULL,
+  `restaurant_name` varchar(100) NOT NULL,
+  `food_name` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price_per_unit` int(11) NOT NULL,
+  `total_price` int(11) GENERATED ALWAYS AS (`quantity` * `price_per_unit`) STORED,
+  `added_at` datetime DEFAULT current_timestamp(),
+  `status` enum('Pending','Ordered','Cancelled') DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `username`, `phone_number`, `restaurant_name`, `food_name`, `quantity`, `price_per_unit`, `added_at`, `status`) VALUES
+(1, 'emad', NULL, 'Khan\'s Kitchen', 'Steak', 2, 544, '2025-01-11 13:35:10', 'Pending'),
+(2, 'emad', NULL, 'Olympia Cafe', 'random', 2, 54, '2025-01-11 13:40:17', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -116,7 +143,9 @@ CREATE TABLE `owners` (
 INSERT INTO `owners` (`id`, `username`, `password`, `restaurant_name`) VALUES
 (1, 'KK', '1234', 'Khan\'s Kitchen'),
 (2, 'OC', '1234', 'Olympia Cafe'),
-(8, 'neptune_admin', 'neptunepass', 'Neptune Diner');
+(8, 'neptune_admin', 'neptunepass', 'Neptune Diner'),
+(9, 'EE', '1234', 'Eastern housing'),
+(10, 'BB', '1234', 'Uiu Cafe');
 
 -- --------------------------------------------------------
 
@@ -140,10 +169,16 @@ CREATE TABLE `restaurants` (
 --
 
 INSERT INTO `restaurants` (`id`, `restaurant_name`, `food_name`, `food_quantity`, `food_image`, `price`, `availability`, `food_category`) VALUES
-(1, 'Khan\'s Kitchen', 'Samosa', 20, 'uploads/istockphoto-1430060145-612x612.jpg', 10, 'Not Available', 'Snacks'),
-(2, 'Khan\'s Kitchen', 'singara', 15, 'uploads/images.jpeg', 5, 'Not Available', 'Snacks'),
-(7, 'Khan\'s Kitchen', 'Samosas', 12, 'uploads/istockphoto-1430060145-612x612.jpg', 12, 'Available', 'Snacks'),
-(9, 'Khan\'s Kitchen', 'steak', 12, 'uploads/images (2).jpeg', 456, 'Available', '14');
+(19, 'Khan\'s Kitchen', 'samosa', 5, '../resources/samosa.png', 70, 'Available', 'Snacks'),
+(20, 'Khan\'s Kitchen', 'Steak', 12, '../resources/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg', 544, 'Available', 'Dinner'),
+(21, 'Olympia Cafe', 'random', 2, '../resources/images (2).jpeg', 54, 'Available', 'Snacks'),
+(22, 'Olympia Cafe', 'sdas', 5, '../resources/360_F_252388016_KjPnB9vglSCuUJAumCDNbmMzGdzPAucK.jpg', 6, 'Available', 'Snacks'),
+(23, 'Eastern housing', 'sada', 3, '../resources/SHF_home-slide-1.jpg', 50, 'Available', 'Snacks'),
+(24, 'Eastern housing', 'fasf', 12, '../resources/images (3).jpeg', 453, 'Available', 'Snacks'),
+(25, 'Uiu Cafe', 'burger', 2, '../resources/images (2).jpeg', 76, 'Available', 'Dinner'),
+(26, 'Uiu Cafe', 'Samosa', 6, '../resources/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg', 6, 'Available', 'Snacks'),
+(27, 'Khan\'s Kitchen', 'asd', 4, '../resources/images.jpeg', 4, 'Not Available', 'Snacks'),
+(28, 'Khan\'s Kitchen', 'asdas', 1, '../resources/food-truck-indulgence-pork-burger-topped-with-cheese-paired-with-fries-ai-generated-photo.jpg', 3, 'Available', 'Snacks');
 
 -- --------------------------------------------------------
 
@@ -162,7 +197,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
-(12, 'emad', '12314'),
 (13, 'ada', '$2y$10$DlzG167tLn1kd3It8fOLF..N.MCirVQgR8LJDVEGlUep5e6uJxtA2'),
 (14, 'asda', '$2y$10$XuZ.cZ6elfQQmiOT45JvOeywn8UB01r4KYxuo/Ve9vhdEeYM6rE1u'),
 (15, '12', '$2y$10$vZnfcCtLvMD/ICib5VnWEuVLERZnn0bPKRBKQq4wfNuBCtKpzzEam'),
@@ -173,11 +207,19 @@ INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
 (20, 'autumnsimp', '$2y$10$bm4Z056X/J.llMbn4p9WSeM5m5inAZlDB8dsoXnEoCwv0HniExx22'),
 (21, 'eee', '$2y$10$H2s4IMil5XOlf9EAvBAdSeQ.iJLMjhW1Vp/hwHSt3.VlyP8LaLeyu'),
 (22, 'emada', '$2y$10$fAGgqKmvNDzomGK781zpE.qjZkb2HLjHbah92hUM9.3OHod/BjtQ.'),
-(23, 'aaaa', '$2y$10$V6/8WHnp4Q.jbIJaCexOBOLvj5K2b42xjzNXEc1D7NYnbmSgJLI2u');
+(23, 'aaaa', '$2y$10$V6/8WHnp4Q.jbIJaCexOBOLvj5K2b42xjzNXEc1D7NYnbmSgJLI2u'),
+(24, 'emad', '$2y$10$jkWd/dDli5p/j2r/pRwoXuRbNNAhxmCFEkTwPpWEhbey0aPNFYwqS');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `restaurant_name` (`restaurant_name`);
 
 --
 -- Indexes for table `orders`
@@ -219,6 +261,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -234,23 +282,29 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT for table `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`restaurant_name`) REFERENCES `restaurants` (`restaurant_name`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`
