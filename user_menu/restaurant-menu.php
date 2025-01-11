@@ -4,13 +4,13 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: login.html");
+    header("Location: ..\home\login.html");
     exit();
 }
 
 // Get the restaurant name from the URL
 if (!isset($_GET['restaurant'])) {
-    header("Location: restaurants.php");
+    header("Location: ..\home\restaurants.php");
     exit();
 }
 
@@ -53,7 +53,7 @@ $result = $stmt->get_result();
     <section class="nav-top">
         <navbar>
             <ul class="nav-list">
-                <li class="nav-logo"> <a href="index.php">レスト</a> </li>
+                <li class="nav-logo"> <a href="..\home\index.php">レスト</a> </li>
                 <li class="nav-item"> <a href="">📌Location</a> </li>
                 <li class="nav-item">👋 Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</li>
                 <li class="nav-item"> <a href="cart.php">🛒Cart</a></li>
