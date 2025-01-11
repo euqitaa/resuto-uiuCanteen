@@ -52,118 +52,85 @@ $conn->close();
 	<link href="cart-style.css" rel="stylesheet">
 	<link href="..\home\landing-style.css" rel="stylesheet">
 	<style>
-		.wrapper {
-			display: flex;
-			max-width: 90vw;
-			margin: 5rem auto;
-			border: none;
-			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
-			padding: 2rem;
-			border-radius: 1rem;
-			gap: 2rem;
-			/* Increased gap for better spacing */
-			flex-grow: 1;
-			justify-content: flex-start;
-			/* Align items to the start */
-		}
-
-		.project {
-			display: flex;
-			flex: 75%;
-			/* Occupy 75% of the space for cart items */
-			flex-direction: row;
-			gap: 2rem;
-			/* Space between cart items and right bar */
-		}
-
-		.shop {
-			flex: 65%;
-		}
-
-		.right-bar {
-			flex: 35%;
-			padding: 20px;
-			height: auto;
-			border-radius: 1rem;
-			background: #fff;
-			box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-		}
-
 		.checkout {
 			width: 30%;
+			/* Adjusted width for better alignment */
 			border-radius: 1rem;
-			position: relative;
-			border: none;
-			margin-left: auto;
-			/* Align to the right side */
-			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
-			padding: 2rem;
 			background: #fff;
+			/* Consistent white background */
+			box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+			/* Match other boxes */
+			padding: 1.5rem;
+			/* Uniform padding */
+			margin-left: 20px;
+			/* Slight margin to balance spacing */
+			align-self: flex-start;
+			/* Align to the top with other sections */
+			margin-top: 115px;
 		}
 
 		.checkout h2 {
-			font-size: 1.5rem;
-			font-weight: bold;
-			color: #1b1f46;
+			font-size: 20px;
 			margin-bottom: 1rem;
+			font-weight: bold;
 			text-align: left;
-			width: 100%;
 		}
 
-		.form-group {
-			display: flex;
-			flex-direction: column;
+		.checkout-box {
+			position: inherit;
+			border-radius: 0.5rem;
+			background-color: transparent;
+			/* Removed colored background for a clean look */
+			padding: 1rem;
+		}
+
+		.checkout-top {
+			padding: 0.5rem 0;
+		}
+
+		#phone-number,
+		#room-number {
 			width: 100%;
+			padding: 0.7rem;
 			margin-bottom: 1rem;
-		}
-
-		label {
-			font-size: 1rem;
-			font-weight: bold;
-			margin-bottom: 0.5rem;
-			color: #1b1f46;
-		}
-
-		input[type="text"] {
-			width: 100%;
-			padding: 10px;
-			font-size: 1rem;
+			font-size: 14px;
+			border: 1px solid #ddd;
 			border-radius: 5px;
-			border: 1px solid #ccc;
 			background-color: #f9f9f9;
-			box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+			/* Subtle background for inputs */
 		}
 
-		input[type="text"]:focus {
-			border-color: #1b1f46;
-			outline: none;
-			background-color: #fff;
-			box-shadow: 0 0 5px rgba(27, 31, 70, 0.2);
-		}
-
-		.checkout-btn {
+		#checkout-btn {
 			width: 100%;
-			padding: 15px;
 			background-color: #1b1f46;
 			color: white;
 			border: none;
-			border-radius: 5px;
-			font-size: 1.1rem;
-			font-weight: bold;
+			padding: 0.7rem;
+			font-size: 16px;
 			cursor: pointer;
-			text-align: center;
-			transition: background-color 0.3s ease-in-out;
+			border-radius: 5px;
+			transition: background-color 0.3s ease;
+			font-weight: bold;
 		}
 
-		.checkout-btn:hover {
+		#checkout-btn:hover {
 			background-color: #fe4119;
-			box-shadow: 0 5px 15px rgba(254, 65, 25, 0.4);
+			/* Highlight effect on hover */
 		}
 
-		.checkout-btn:disabled {
-			background-color: #ddd;
-			cursor: not-allowed;
-			box-shadow: none;
+		.checkout-bottom-food,
+		.checkout-bottom-userinfo {
+			padding: 1rem;
+		}
+
+		.checkout-bottom {
+			padding-bottom: 1rem;
+		}
+
+		.checkout-bottom-btn {
+			display: flex;
+			justify-content: flex-end;
+			padding: 1rem 0;
 		}
 	</style>
 </head>
@@ -219,20 +186,19 @@ $conn->close();
 			</div>
 		</div>
 
-		<div class="checkout-details">
+		<div class="checkout">
 			<h2>Checkout Information</h2>
-			<form method="POST" action="checkout.php">
-				<div class="form-group">
-					<label for="phone_number">Phone Number:</label>
-					<input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
-				</div>
-				<div class="form-group">
-					<label for="room_number">Room Number:</label>
-					<input type="text" id="room_number" name="room_number" placeholder="Enter your room number" required>
-				</div>
-				<button type="submit" class="checkout-btn">Checkout</button>
+			<form method="POST" action="place-order.php">
+				<label for="phone-number">Phone Number</label>
+				<input style="margin-top: 10px;" type="text" id="phone-number" name="phone_number" placeholder="Enter your phone number" required>
+
+				<label for="room-number">Room Number</label>
+				<input type="text" id="room-number" name="room_number" placeholder="Enter your room number" required style="margin-top: 10px;">
+
+				<button id="checkout-btn" type="submit">Checkout</button>
 			</form>
 		</div>
+
 	</div>
 </body>
 
