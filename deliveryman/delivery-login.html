@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Login - レスト</title>
+    <link rel="stylesheet" href="delivery-login.css">
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <h1>Rider Login - <span class="res-name">レスト</span></h1>
+            <?php if (isset($_GET['error'])): ?>
+                <p class="error-message"><?php echo htmlspecialchars($_GET['error']); ?></p>
+            <?php endif; ?>
+            <form action="delivery-login.php" method="POST">
+                <div class="textbox-parent">
+                    <div class="textbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <input type="submit" class="btn" value="Login">
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

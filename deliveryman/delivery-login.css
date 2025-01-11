@@ -35,7 +35,6 @@ body{
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-
 }
 .textbox{
     border-bottom: 1px solid #1b1f46;
@@ -45,7 +44,6 @@ body{
     align-items: center;
     outline: none;
     transition: ease-in 200ms all;
-
 }
 .textbox input{
     border: none;
@@ -57,7 +55,6 @@ body{
     margin: 0 10px;
     transition: ease-in 200ms all;
 }
-
 .btn{
     width: 100%;
     background: #1b1f46;

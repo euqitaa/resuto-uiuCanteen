@@ -185,19 +185,23 @@ $conn->close();
 				</div>
 			</div>
 		</div>
-
 		<div class="checkout">
 			<h2>Checkout Information</h2>
-			<form method="POST" action="place-order.php">
-				<label for="phone-number">Phone Number</label>
-				<input style="margin-top: 10px;" type="text" id="phone-number" name="phone_number" placeholder="Enter your phone number" required>
+			<?php if (!empty($cart_items)) : ?>
+				<form method="POST" action="place-order.php">
+					<label for="phone-number">Phone Number</label>
+					<input style="margin-top: 10px;" type="text" id="phone-number" name="phone_number" placeholder="Enter your phone number" required>
 
-				<label for="room-number">Room Number</label>
-				<input type="text" id="room-number" name="room_number" placeholder="Enter your room number" required style="margin-top: 10px;">
+					<label for="room-number">Room Number</label>
+					<input type="text" id="room-number" name="room_number" placeholder="Enter your room number" required style="margin-top: 10px;">
 
-				<button id="checkout-btn" type="submit">Checkout</button>
-			</form>
+					<button id="checkout-btn" type="submit">Checkout</button>
+				</form>
+			<?php else : ?>
+				<p>Your cart is empty! Add items to proceed with checkout.</p>
+			<?php endif; ?>
 		</div>
+
 
 	</div>
 </body>
