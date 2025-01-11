@@ -44,8 +44,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($restaurant_name); ?> - レスト</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="..\home\landing-style.css">
+    <link rel="stylesheet" href="restaurant-menu.css">
 </head>
 
 <body>
@@ -66,7 +65,7 @@ $result = $stmt->get_result();
         <div class="res-info">
             <div class="restaurant-logo">
                 <!-- Use the first food image as the placeholder logo -->
-                <img src="<?php echo htmlspecialchars($result->fetch_assoc()['food_image'] ?? 'placeholder.jpg'); ?>" alt="Restaurant Logo">
+                <img class="res-logo" style="object-fit: contain; width:300px;```php" src="<?php echo htmlspecialchars($result->fetch_assoc()['food_image'] ?? 'placeholder.jpg'); ?>" alt="Restaurant Logo">
             </div>
             <div class="restaurant-name">
                 <h1 id="res-name-text"><?php echo htmlspecialchars($restaurant_name); ?></h1>
@@ -79,8 +78,8 @@ $result = $stmt->get_result();
     <section class="restaurant-items">
         <div class="restaurant-items-list-freq">
             <div>
-                <h1 style="font-size: 28px; font-weight: bold;">Food Items</h1>
-                <p style="font-family: sans-serif; font-weight: lighter; font-size: 14px;">Choose items to your liking...</p>
+                <h1 style="font-size: 30px; font-weight: bold; margin-left: 90px">Food Items</h1>
+                <p style="font-family: sans-serif; font-weight: lighter; font-size: 18px; margin-left:90px">Choose items to your liking...</p>
             </div>
             <div class="food-items">
                 <ul class="fooditemlist">
@@ -102,7 +101,7 @@ $result = $stmt->get_result();
                                     </div>
                                     <div class="food-item-button-right">
                                         <div class="div-foodimage">
-                                            <img src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
+                                            <img style="object-fit: contain; object-position:top;" src="<?php echo htmlspecialchars($row['food_image']); ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
                                         </div>
                                         <div class="addfoodbutton">
                                             <?php if ($availability === 'Available'): ?>
