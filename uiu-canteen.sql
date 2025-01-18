@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2025 at 04:22 PM
+-- Generation Time: Jan 18, 2025 at 08:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `uiu-canteen`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -48,7 +67,12 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`id`, `username`, `phone_number`, `room_number`, `restaurant_name`, `food_name`, `quantity`, `price_per_unit`, `added_at`, `status`) VALUES
 (5, 'emad', NULL, NULL, 'Eastern housing', 'sada', 1, 50, '2025-01-11 20:38:21', 'Ordered'),
 (6, 'emad', NULL, NULL, 'Eastern housing', 'fasf', 4, 453, '2025-01-11 20:38:27', 'Ordered'),
-(7, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 4, 544, '2025-01-11 20:44:14', 'Pending');
+(7, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 4, 544, '2025-01-11 20:44:14', 'Ordered'),
+(8, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 1, 70, '2025-01-18 11:53:54', 'Ordered'),
+(9, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 3, 544, '2025-01-18 12:41:37', 'Ordered'),
+(10, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 2, 70, '2025-01-18 12:51:47', 'Ordered'),
+(11, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 12:59:29', 'Ordered'),
+(12, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 13:01:58', 'Ordered');
 
 -- --------------------------------------------------------
 
@@ -64,7 +88,7 @@ CREATE TABLE `check_for_rider` (
   `phone_number` varchar(15) NOT NULL,
   `room_number` varchar(50) NOT NULL,
   `total_price` int(11) NOT NULL,
-  `status` enum('Awaiting','Pending','Confirmed','Cancelled') DEFAULT 'Awaiting',
+  `status` enum('Awaiting','Pending','Confirmed','Completed','Cancelled') DEFAULT 'Awaiting',
   `rider_username` varchar(255) DEFAULT NULL,
   `added_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -74,7 +98,12 @@ CREATE TABLE `check_for_rider` (
 --
 
 INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `rider_username`, `added_at`) VALUES
-(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Pending', 'a', '2025-01-11 20:38:36');
+(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Pending', 'a', '2025-01-11 20:38:36'),
+(2, 2, 'Khan\'s Kitchen', 'emad', '01304', '304', 2246, 'Completed', 'a', '2025-01-18 11:54:05'),
+(3, 3, 'Khan\'s Kitchen', 'aad', '1234', '1234', 1632, '', 'a', '2025-01-18 12:41:58'),
+(4, 4, 'Khan\'s Kitchen', 'aad', '11', '11', 140, '', 'a', '2025-01-18 12:51:52'),
+(5, 5, 'Khan\'s Kitchen', 'aad', '12341231', '123123', 544, '', 'a', '2025-01-18 12:59:33'),
+(6, 6, 'Khan\'s Kitchen', 'aad', 'io', 'ioi', 544, '', 'a', '2025-01-18 13:02:03');
 
 -- --------------------------------------------------------
 
@@ -98,7 +127,12 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `phone_number`, `room_number`, `order_date`, `status`) VALUES
-(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Pending');
+(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Pending'),
+(2, 'Khan\'s Kitchen', 'emad', 2246, '01304', '304', '2025-01-18 11:54:05', 'Completed'),
+(3, 'Khan\'s Kitchen', 'aad', 1632, '1234', '1234', '2025-01-18 12:41:58', 'Completed'),
+(4, 'Khan\'s Kitchen', 'aad', 140, '11', '11', '2025-01-18 12:51:52', 'Completed'),
+(5, 'Khan\'s Kitchen', 'aad', 544, '12341231', '123123', '2025-01-18 12:59:33', 'Completed'),
+(6, 'Khan\'s Kitchen', 'aad', 544, 'io', 'ioi', '2025-01-18 13:02:03', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -120,7 +154,13 @@ CREATE TABLE `order_details` (
 
 INSERT INTO `order_details` (`id`, `order_id`, `food_name`, `quantity`, `price_per_unit`) VALUES
 (1, 1, 'sada', 1, 50),
-(2, 1, 'fasf', 4, 453);
+(2, 1, 'fasf', 4, 453),
+(3, 2, 'Steak', 4, 544),
+(4, 2, 'samosa', 1, 70),
+(5, 3, 'Steak', 3, 544),
+(6, 4, 'samosa', 2, 70),
+(7, 5, 'Steak', 1, 544),
+(8, 6, 'Steak', 1, 544);
 
 -- --------------------------------------------------------
 
@@ -235,6 +275,13 @@ INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
@@ -295,28 +342,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `check_for_rider`
 --
 ALTER TABLE `check_for_rider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `owners`
