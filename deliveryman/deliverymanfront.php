@@ -22,10 +22,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// ✅ Fetch orders based on their current status
+// ✅ Fetch only the rider's accepted order if any, else fetch 'Awaiting' orders
 $sql = "SELECT * FROM check_for_rider 
-        WHERE status IN ('Awaiting', 'Pending', 'Confirmed') 
-        AND (rider_username IS NULL OR rider_username = ?)";
+        WHERE (status IN ('Pending', 'Confirmed') AND rider_username = ?) 
+        OR (status = 'Awaiting' AND rider_username IS NULL)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $rider_username);
 $stmt->execute();
@@ -105,14 +105,14 @@ $conn->close();
                             </form>
 
                         <?php elseif ($order['status'] === 'Pending') : ?>
-                            <!-- Pending Status -->
-                            <button class="confirm-btn" disabled>Pending</button>
+                            <!-- Pending Button (Disabled) -->
+                            <button class="confirm-btn" disabled>Pending (Waiting for Restaurant Confirmation)</button>
 
                         <?php elseif ($order['status'] === 'Confirmed') : ?>
                             <!-- Mark as Completed Button -->
                             <form method="POST" action="complete-order.php">
                                 <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                                <button class="confirm-btn" class="complete-btn">Mark as Completed</button>
+                                <button type="submit" class="confirm-btn">Mark as Completed</button>
                             </form>
 
                         <?php elseif ($order['status'] === 'Completed') : ?>
