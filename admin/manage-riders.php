@@ -18,8 +18,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all users
-$sql = "SELECT id, username FROM users";
+// Fetch all riders (username and phone number)
+$sql = "SELECT id, username, phone_number FROM riders";
 $result = $conn->query($sql);
 ?>
 
@@ -28,7 +28,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
+    <title>Manage Riders</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,30 +100,32 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-    <h2>User Management</h2>
+    <h2>Rider Management</h2>
 
     <table>
         <tr>
             <th>ID</th>
             <th>Username</th>
+            <th>Phone Number</th>
             <th>Action</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
-            while ($user = $result->fetch_assoc()) {
+            while ($rider = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>{$user['id']}</td>
-                        <td>".htmlspecialchars($user['username'])."</td>
+                        <td>{$rider['id']}</td>
+                        <td>".htmlspecialchars($rider['username'])."</td>
+                        <td>".htmlspecialchars($rider['phone_number'])."</td>
                         <td>
-                            <form method='POST' action='delete-user.php' onsubmit='return confirm(\"Are you sure you want to delete this user?\");'>
-                                <input type='hidden' name='user_id' value='{$user['id']}'>
+                            <form method='POST' action='delete-rider.php' onsubmit='return confirm(\"Are you sure you want to delete this rider?\");'>
+                                <input type='hidden' name='rider_id' value='{$rider['id']}'>
                                 <button type='submit' class='delete-btn'>Delete</button>
                             </form>
                         </td>
                       </tr>";
             }
         } else {
-            echo "<tr><td colspan='3'>No users found.</td></tr>";
+            echo "<tr><td colspan='4'>No riders found.</td></tr>";
         }
         $conn->close();
         ?>

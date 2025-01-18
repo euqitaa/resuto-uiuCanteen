@@ -1,25 +1,16 @@
 <?php
 session_start();
-
 if (!isset($_SESSION['admin_username'])) {
     header("Location: login.html?error=unauthorized");
     exit();
 }
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "uiu-canteen";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+$conn = new mysqli("localhost", "root", "", "uiu-canteen");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all users
-$sql = "SELECT id, username FROM users";
+$sql = "SELECT id, restaurant_name FROM restaurants";
 $result = $conn->query($sql);
 ?>
 
@@ -28,7 +19,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users</title>
+    <title>Manage Restaurants</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,30 +91,30 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-    <h2>User Management</h2>
+    <h2>Restaurant Management</h2>
 
     <table>
         <tr>
             <th>ID</th>
-            <th>Username</th>
+            <th>Restaurant Name</th>
             <th>Action</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
-            while ($user = $result->fetch_assoc()) {
+            while ($restaurant = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>{$user['id']}</td>
-                        <td>".htmlspecialchars($user['username'])."</td>
+                        <td>{$restaurant['id']}</td>
+                        <td>".htmlspecialchars($restaurant['restaurant_name'])."</td>
                         <td>
-                            <form method='POST' action='delete-user.php' onsubmit='return confirm(\"Are you sure you want to delete this user?\");'>
-                                <input type='hidden' name='user_id' value='{$user['id']}'>
+                            <form method='POST' action='delete-restaurant.php' onsubmit='return confirm(\"Are you sure you want to delete this restaurant?\");'>
+                                <input type='hidden' name='restaurant_id' value='{$restaurant['id']}'>
                                 <button type='submit' class='delete-btn'>Delete</button>
                             </form>
                         </td>
                       </tr>";
             }
         } else {
-            echo "<tr><td colspan='3'>No users found.</td></tr>";
+            echo "<tr><td colspan='3'>No restaurants found.</td></tr>";
         }
         $conn->close();
         ?>
