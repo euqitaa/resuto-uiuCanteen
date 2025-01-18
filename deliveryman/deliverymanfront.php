@@ -22,7 +22,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// ✅ Fetch only the rider's accepted order if any, else fetch 'Awaiting' orders
+// ✅ Fetch rider's orders (Awaiting, Pending, Confirmed)
 $sql = "SELECT * FROM check_for_rider 
         WHERE (status IN ('Pending', 'Confirmed') AND rider_username = ?) 
         OR (status = 'Awaiting' AND rider_username IS NULL)";
@@ -39,6 +39,26 @@ if ($result->num_rows > 0) {
 }
 
 $stmt->close();
+
+// ✅ Fetch all completed deliveries and earnings (no date filter)
+$sql_completed = "SELECT COUNT(*) AS total_deliveries 
+                  FROM check_for_rider 
+                  WHERE rider_username = ? AND status = 'Completed'";
+$stmt_completed = $conn->prepare($sql_completed);
+$stmt_completed->bind_param("s", $rider_username);
+$stmt_completed->execute();
+$result_completed = $stmt_completed->get_result();
+
+$total_deliveries = 0;
+$total_earnings = 0;
+
+if ($result_completed->num_rows > 0) {
+    $row = $result_completed->fetch_assoc();
+    $total_deliveries = $row['total_deliveries'];
+    $total_earnings = $total_deliveries * 25;  // 25 Taka per completed delivery
+}
+
+$stmt_completed->close();
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -76,14 +96,15 @@ $conn->close();
     <section class="main">
         <h1 class="welcome-msg">Welcome, <?php echo htmlspecialchars($rider_username); ?>!</h1>
 
+        <!-- ✅ Updated Dashboard -->
         <div class="dashboard">
             <div class="dashboard-left">
-                <p>Today's Total Earning</p>
-                <p style="font-size: 2rem; padding: 0.5rem;">TK 0.00</p>
+                <p>Total Earnings</p>
+                <p style="font-size: 2rem; padding: 0.5rem;">TK <?php echo number_format($total_earnings, 2); ?></p>
             </div>
             <div class="dashboard-right">
-                <p>Today's Total Deliveries</p>
-                <p style="font-size: 2rem; padding: 0.5rem;">0</p>
+                <p>Total Deliveries</p>
+                <p style="font-size: 2rem; padding: 0.5rem;"><?php echo $total_deliveries; ?></p>
             </div>
         </div>
 
@@ -96,28 +117,20 @@ $conn->close();
                         <p>Phone: <?php echo htmlspecialchars($order['phone_number']); ?></p>
                         <p>Total Price: TK <?php echo htmlspecialchars($order['total_price']); ?></p>
 
-                        <!-- 🚀 Dynamic Button Based on Status -->
                         <?php if ($order['status'] === 'Awaiting') : ?>
-                            <!-- Accept Button -->
                             <form method="POST" action="take-order.php">
                                 <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
                                 <button type="submit" class="confirm-btn">Accept</button>
                             </form>
-
                         <?php elseif ($order['status'] === 'Pending') : ?>
-                            <!-- Pending Button (Disabled) -->
                             <button class="confirm-btn" disabled>Pending (Waiting for Restaurant Confirmation)</button>
-
                         <?php elseif ($order['status'] === 'Confirmed') : ?>
-                            <!-- Mark as Completed Button -->
                             <form method="POST" action="complete-order.php">
                                 <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
                                 <button type="submit" class="confirm-btn">Mark as Completed</button>
                             </form>
-
                         <?php elseif ($order['status'] === 'Completed') : ?>
-                            <!-- Completed Status -->
-                            <button class="completed-btn" disabled>Completed</button>
+                            <button class="confirm-btn" disabled>Completed</button>
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
