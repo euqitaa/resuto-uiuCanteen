@@ -57,6 +57,16 @@ $conn->close();
             </ul>
         </navbar>
     </section>
+    <!-- 🟢 Success/Error Message Display -->
+<?php if (isset($_SESSION['message'])): ?>
+    <div style="background-color: #d4edda; color: #155724; padding: 15px; border-left: 5px solid #28a745; margin: 10px 20px; border-radius: 4px;">
+        <?php 
+            echo htmlspecialchars($_SESSION['message']); 
+            unset($_SESSION['message']);  // Clear the message after displaying
+        ?>
+    </div>
+<?php endif; ?>
+
 
     <section class="main">
         <h1 class="welcome-msg">Welcome, <?php echo htmlspecialchars($rider_username); ?>!</h1>
