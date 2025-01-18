@@ -22,9 +22,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch orders awaiting rider
-$sql = "SELECT * FROM check_for_rider WHERE status = 'Awaiting'";
-$result = $conn->query($sql);
+// ✅ Fetch orders based on their current status
+$sql = "SELECT * FROM check_for_rider 
+        WHERE status IN ('Awaiting', 'Pending', 'Confirmed') 
+        AND (rider_username IS NULL OR rider_username = ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $rider_username);
+$stmt->execute();
+$result = $stmt->get_result();
 
 $available_orders = [];
 if ($result->num_rows > 0) {
@@ -33,6 +38,7 @@ if ($result->num_rows > 0) {
     }
 }
 
+$stmt->close();
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -53,20 +59,19 @@ $conn->close();
                 <li class="nav-item">👤 <?php echo htmlspecialchars($rider_username); ?></li>
                 <li class="nav-item"> <a href="delivery-history.php">📃History</a> </li>
                 <li class="nav-item"> <a href="delivery-logout.php">🛑Logout</a> </li>
-
             </ul>
         </navbar>
     </section>
-    <!-- 🟢 Success/Error Message Display -->
-<?php if (isset($_SESSION['message'])): ?>
-    <div style="background-color: #d4edda; color: #155724; padding: 15px; border-left: 5px solid #28a745; margin: 10px 20px; border-radius: 4px;">
-        <?php 
-            echo htmlspecialchars($_SESSION['message']); 
-            unset($_SESSION['message']);  // Clear the message after displaying
-        ?>
-    </div>
-<?php endif; ?>
 
+    <!-- 🟢 Success/Error Message Display -->
+    <?php if (isset($_SESSION['message'])): ?>
+        <div style="background-color: #d4edda; color: #155724; padding: 15px; border-left: 5px solid #28a745; margin: 10px 20px; border-radius: 4px;">
+            <?php 
+                echo htmlspecialchars($_SESSION['message']); 
+                unset($_SESSION['message']);  // Clear the message after displaying
+            ?>
+        </div>
+    <?php endif; ?>
 
     <section class="main">
         <h1 class="welcome-msg">Welcome, <?php echo htmlspecialchars($rider_username); ?>!</h1>
@@ -90,15 +95,34 @@ $conn->close();
                         <p>Customer: <?php echo htmlspecialchars($order['customer_name']); ?></p>
                         <p>Phone: <?php echo htmlspecialchars($order['phone_number']); ?></p>
                         <p>Total Price: TK <?php echo htmlspecialchars($order['total_price']); ?></p>
-                        <form method="POST" action="take-order.php">
-                            <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                            <input type="hidden" name="rider_username" value="<?php echo htmlspecialchars($rider_username); ?>">
-                            <button type="submit" class="confirm-btn">Accept</button>
-                        </form>
+
+                        <!-- 🚀 Dynamic Button Based on Status -->
+                        <?php if ($order['status'] === 'Awaiting') : ?>
+                            <!-- Accept Button -->
+                            <form method="POST" action="take-order.php">
+                                <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                <button type="submit" class="confirm-btn">Accept</button>
+                            </form>
+
+                        <?php elseif ($order['status'] === 'Pending') : ?>
+                            <!-- Pending Status -->
+                            <button class="confirm-btn" disabled>Pending</button>
+
+                        <?php elseif ($order['status'] === 'Confirmed') : ?>
+                            <!-- Mark as Completed Button -->
+                            <form method="POST" action="complete-order.php">
+                                <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                <button class="confirm-btn" class="complete-btn">Mark as Completed</button>
+                            </form>
+
+                        <?php elseif ($order['status'] === 'Completed') : ?>
+                            <!-- Completed Status -->
+                            <button class="completed-btn" disabled>Completed</button>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             <?php else : ?>
-                <p>No orders awaiting delivery at the moment.</p>
+                <p>No orders available at the moment.</p>
             <?php endif; ?>
         </div>
     </section>

@@ -1,8 +1,8 @@
 <?php
-// Start the session
+// Start session
 session_start();
 
-// Check if the user is logged in
+// Check if the restaurant owner is logged in
 if (!isset($_SESSION['restaurant_name'])) {
     header("Location: owner-login.html");
     exit();
@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 // Handle the order status update
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id']) && isset($_POST['action'])) {
     $order_id = $_POST['order_id'];
     $action = $_POST['action'];
 
@@ -34,21 +34,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($new_status)) {
-        $sql_update = "UPDATE orders SET status = ? WHERE id = ?";
-        $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("si", $new_status, $order_id);
+        // ✅ Update 'orders' table
+        $sql_update_orders = "UPDATE orders SET status = ? WHERE id = ?";
+        $stmt_orders = $conn->prepare($sql_update_orders);
+        $stmt_orders->bind_param("si", $new_status, $order_id);
+        
+        // ✅ Update 'check_for_rider' table
+        $sql_update_rider = "UPDATE check_for_rider SET status = ? WHERE order_id = ?";
+        $stmt_rider = $conn->prepare($sql_update_rider);
+        $stmt_rider->bind_param("si", $new_status, $order_id);
 
-        if ($stmt_update->execute()) {
-            header("Location: ownerorders.php?status=Pending&message=Order status updated successfully");
-            exit();
+        // Execute both updates
+        if ($stmt_orders->execute() && $stmt_rider->execute()) {
+            $_SESSION['message'] = "✅ Order ID $order_id has been updated to $new_status.";
         } else {
-            header("Location: ownerorders.php?status=Pending&error=Failed to update order status");
-            exit();
+            $_SESSION['message'] = "❌ Failed to update Order ID $order_id.";
         }
 
-        $stmt_update->close();
+        $stmt_orders->close();
+        $stmt_rider->close();
+
+        header("Location: ownerorders.php?status=Pending");
+        exit();
     } else {
-        header("Location: ownerorders.php?status=Pending&error=Invalid action");
+        $_SESSION['message'] = "❌ Invalid action.";
+        header("Location: ownerorders.php?status=Pending");
         exit();
     }
 }
