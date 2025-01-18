@@ -12,6 +12,12 @@ $loggedIn = isset($_SESSION['username']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to レスト</title>
     <link rel="stylesheet" href="landing-style.css">
+
+    <style>
+        .rest-img:hover{
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <section class="nav-top">
@@ -45,16 +51,22 @@ $loggedIn = isset($_SESSION['username']);
                 <!-- restaurants-->
                 <div class="content-right">
                     <div class="restaurantslist">
-                        <img src="..\resources\khans.png" alt="Khans Kitchen">
+                        <a href="http://localhost/uiu-canteen/resuto-uiuCanteen/user_menu/restaurant-menu.php?restaurant=Khan%27s+Kitchen">
+                        <img src="..\resources\khans.png" alt="Khans Kitchen" class="rest-img">
                         <p>Khans Kitchen</p>
+                        </a>
                     </div>
                     <div class="restaurantslist">
-                        <img src="..\resources\olympia.png" alt="Olympia">
+                        <a href="http://localhost/uiu-canteen/resuto-uiuCanteen/user_menu/restaurant-menu.php?restaurant=Olympia+Cafe">
+                        <img src="..\resources\olympia.png" alt="Olympia" class="rest-img">
                         <p>Olympia</p>
+                        </a>
                     </div>
                     <div class="restaurantslist">
-                        <img src="..\resources\neptune.png" alt="Neptune">
+                        <a href="http://localhost/uiu-canteen/resuto-uiuCanteen/user_menu/restaurant-menu.php?restaurant=Uiu+Cafe">
+                        <img src="..\resources\neptune.png" alt="Neptune" class="rest-img">
                         <p>Neptune</p>
+                        </a>
                     </div>
                 </div>
     
