@@ -53,6 +53,7 @@ $conn->close();
                 <li class="nav-item">👤 <?php echo htmlspecialchars($rider_username); ?></li>
                 <li class="nav-item"> <a href="delivery-history.php">📃History</a> </li>
                 <li class="nav-item"> <a href="delivery-logout.php">🛑Logout</a> </li>
+
             </ul>
         </navbar>
     </section>
