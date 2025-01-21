@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2025 at 08:28 AM
+-- Generation Time: Jan 21, 2025 at 03:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,7 +72,17 @@ INSERT INTO `cart` (`id`, `username`, `phone_number`, `room_number`, `restaurant
 (9, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 3, 544, '2025-01-18 12:41:37', 'Ordered'),
 (10, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 2, 70, '2025-01-18 12:51:47', 'Ordered'),
 (11, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 12:59:29', 'Ordered'),
-(12, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 13:01:58', 'Ordered');
+(12, 'aad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 13:01:58', 'Ordered'),
+(13, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 1, 70, '2025-01-18 15:45:40', 'Ordered'),
+(14, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-18 15:45:45', 'Ordered'),
+(15, 'emad', NULL, NULL, 'Olympia Cafe', 'random', 1, 54, '2025-01-18 15:45:53', 'Ordered'),
+(16, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 1, 70, '2025-01-18 15:46:51', 'Ordered'),
+(17, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 2, 70, '2025-01-18 15:47:04', 'Ordered'),
+(18, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'samosa', 1, 70, '2025-01-20 21:59:03', 'Ordered'),
+(19, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 2, 544, '2025-01-20 22:01:05', 'Ordered'),
+(20, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-21 20:08:26', 'Ordered'),
+(21, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'asdas', 1, 3, '2025-01-21 20:09:15', 'Ordered'),
+(22, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'random', 2, 546, '2025-01-21 20:09:18', 'Ordered');
 
 -- --------------------------------------------------------
 
@@ -98,12 +108,14 @@ CREATE TABLE `check_for_rider` (
 --
 
 INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `rider_username`, `added_at`) VALUES
-(1, 1, 'Eastern housing', 'emad', 'eamd', '1234', 1862, 'Pending', 'a', '2025-01-11 20:38:36'),
-(2, 2, 'Khan\'s Kitchen', 'emad', '01304', '304', 2246, 'Completed', 'a', '2025-01-18 11:54:05'),
-(3, 3, 'Khan\'s Kitchen', 'aad', '1234', '1234', 1632, '', 'a', '2025-01-18 12:41:58'),
-(4, 4, 'Khan\'s Kitchen', 'aad', '11', '11', 140, '', 'a', '2025-01-18 12:51:52'),
-(5, 5, 'Khan\'s Kitchen', 'aad', '12341231', '123123', 544, '', 'a', '2025-01-18 12:59:33'),
-(6, 6, 'Khan\'s Kitchen', 'aad', 'io', 'ioi', 544, '', 'a', '2025-01-18 13:02:03');
+(11, 11, 'Khan\'s Kitchen', 'emad', '123', '123', 614, 'Completed', 'a', '2025-01-18 15:45:49'),
+(12, 12, 'Olympia Cafe', 'emad', '43', '43', 54, 'Pending', 'a', '2025-01-18 15:45:56'),
+(13, 13, 'Khan\'s Kitchen', 'emad', 'g', 'tr', 70, 'Completed', 'a', '2025-01-18 15:46:55'),
+(14, 14, 'Khan\'s Kitchen', 'emad', '12', '31', 140, 'Completed', 'a', '2025-01-18 15:47:09'),
+(15, 15, 'Khan\'s Kitchen', 'emad', '1233', '432342', 70, 'Completed', 'a', '2025-01-20 21:59:08'),
+(16, 16, 'Khan\'s Kitchen', 'emad', '545', '543', 1088, 'Completed', 'a', '2025-01-20 22:01:10'),
+(17, 17, 'Khan\'s Kitchen', 'emad', 'asfa', 'asdas', 544, 'Completed', 'a', '2025-01-21 20:08:30'),
+(18, 18, 'Khan\'s Kitchen', 'emad', '123', '1321', 1095, 'Completed', 'a', '2025-01-21 20:09:23');
 
 -- --------------------------------------------------------
 
@@ -127,12 +139,14 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `phone_number`, `room_number`, `order_date`, `status`) VALUES
-(1, 'Eastern housing', 'emad', 1862, 'eamd', '1234', '2025-01-11 20:38:36', 'Pending'),
-(2, 'Khan\'s Kitchen', 'emad', 2246, '01304', '304', '2025-01-18 11:54:05', 'Completed'),
-(3, 'Khan\'s Kitchen', 'aad', 1632, '1234', '1234', '2025-01-18 12:41:58', 'Completed'),
-(4, 'Khan\'s Kitchen', 'aad', 140, '11', '11', '2025-01-18 12:51:52', 'Completed'),
-(5, 'Khan\'s Kitchen', 'aad', 544, '12341231', '123123', '2025-01-18 12:59:33', 'Completed'),
-(6, 'Khan\'s Kitchen', 'aad', 544, 'io', 'ioi', '2025-01-18 13:02:03', 'Completed');
+(11, 'Khan\'s Kitchen', 'emad', 614, '123', '123', '2025-01-18 15:45:49', 'Completed'),
+(12, 'Olympia Cafe', 'emad', 54, '43', '43', '2025-01-18 15:45:56', 'Pending'),
+(13, 'Khan\'s Kitchen', 'emad', 70, 'g', 'tr', '2025-01-18 15:46:55', 'Completed'),
+(14, 'Khan\'s Kitchen', 'emad', 140, '12', '31', '2025-01-18 15:47:09', 'Completed'),
+(15, 'Khan\'s Kitchen', 'emad', 70, '1233', '432342', '2025-01-20 21:59:08', 'Completed'),
+(16, 'Khan\'s Kitchen', 'emad', 1088, '545', '543', '2025-01-20 22:01:10', 'Completed'),
+(17, 'Khan\'s Kitchen', 'emad', 544, 'asfa', 'asdas', '2025-01-21 20:08:30', 'Completed'),
+(18, 'Khan\'s Kitchen', 'emad', 1095, '123', '1321', '2025-01-21 20:09:23', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -153,14 +167,16 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `food_name`, `quantity`, `price_per_unit`) VALUES
-(1, 1, 'sada', 1, 50),
-(2, 1, 'fasf', 4, 453),
-(3, 2, 'Steak', 4, 544),
-(4, 2, 'samosa', 1, 70),
-(5, 3, 'Steak', 3, 544),
-(6, 4, 'samosa', 2, 70),
-(7, 5, 'Steak', 1, 544),
-(8, 6, 'Steak', 1, 544);
+(13, 11, 'samosa', 1, 70),
+(14, 11, 'Steak', 1, 544),
+(15, 12, 'random', 1, 54),
+(16, 13, 'samosa', 1, 70),
+(17, 14, 'samosa', 2, 70),
+(18, 15, 'samosa', 1, 70),
+(19, 16, 'Steak', 2, 544),
+(20, 17, 'Steak', 1, 544),
+(21, 18, 'asdas', 1, 3),
+(22, 18, 'random', 2, 546);
 
 -- --------------------------------------------------------
 
@@ -216,8 +232,9 @@ INSERT INTO `restaurants` (`id`, `restaurant_name`, `food_name`, `food_quantity`
 (24, 'Eastern housing', 'fasf', 12, '../resources/images (3).jpeg', 453, 'Available', 'Snacks'),
 (25, 'Uiu Cafe', 'burger', 2, '../resources/images (2).jpeg', 76, 'Available', 'Dinner'),
 (26, 'Uiu Cafe', 'Samosa', 6, '../resources/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg', 6, 'Available', 'Snacks'),
-(27, 'Khan\'s Kitchen', 'asd', 4, '../resources/images.jpeg', 4, 'Not Available', 'Snacks'),
-(28, 'Khan\'s Kitchen', 'asdas', 1, '../resources/food-truck-indulgence-pork-burger-topped-with-cheese-paired-with-fries-ai-generated-photo.jpg', 3, 'Available', 'Snacks');
+(27, 'Khan\'s Kitchen', 'asd', 4, '../resources/images.jpeg', 4, 'Available', 'Snacks'),
+(28, 'Khan\'s Kitchen', 'asdas', 1, '../resources/food-truck-indulgence-pork-burger-topped-with-cheese-paired-with-fries-ai-generated-photo.jpg', 3, 'Available', 'Snacks'),
+(29, 'Khan\'s Kitchen', 'random', 18, '../resources/170206165040-dubai-michelin-dining-boca.jpg', 546, 'Available', 'Snacks');
 
 -- --------------------------------------------------------
 
@@ -351,25 +368,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `check_for_rider`
 --
 ALTER TABLE `check_for_rider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `owners`
@@ -381,7 +398,7 @@ ALTER TABLE `owners`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `riders`
