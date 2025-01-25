@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2025 at 08:35 AM
+-- Generation Time: Jan 25, 2025 at 05:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,7 +82,8 @@ INSERT INTO `cart` (`id`, `username`, `phone_number`, `room_number`, `restaurant
 (19, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 2, 544, '2025-01-20 22:01:05', 'Ordered'),
 (20, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'Steak', 1, 544, '2025-01-21 20:08:26', 'Ordered'),
 (21, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'asdas', 1, 3, '2025-01-21 20:09:15', 'Ordered'),
-(22, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'random', 2, 546, '2025-01-21 20:09:18', 'Ordered');
+(22, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'random', 2, 546, '2025-01-21 20:09:18', 'Ordered'),
+(24, 'emad', NULL, NULL, 'Khan\'s Kitchen', 'asd', 1, 4, '2025-01-25 14:40:43', 'Ordered');
 
 -- --------------------------------------------------------
 
@@ -109,13 +110,13 @@ CREATE TABLE `check_for_rider` (
 
 INSERT INTO `check_for_rider` (`id`, `order_id`, `restaurant_name`, `customer_name`, `phone_number`, `room_number`, `total_price`, `status`, `rider_username`, `added_at`) VALUES
 (11, 11, 'Khan\'s Kitchen', 'emad', '123', '123', 614, 'Completed', 'a', '2025-01-18 15:45:49'),
-(12, 12, 'Olympia Cafe', 'emad', '43', '43', 54, 'Pending', 'a', '2025-01-18 15:45:56'),
 (13, 13, 'Khan\'s Kitchen', 'emad', 'g', 'tr', 70, 'Completed', 'a', '2025-01-18 15:46:55'),
 (14, 14, 'Khan\'s Kitchen', 'emad', '12', '31', 140, 'Completed', 'a', '2025-01-18 15:47:09'),
 (15, 15, 'Khan\'s Kitchen', 'emad', '1233', '432342', 70, 'Completed', 'a', '2025-01-20 21:59:08'),
 (16, 16, 'Khan\'s Kitchen', 'emad', '545', '543', 1088, 'Completed', 'a', '2025-01-20 22:01:10'),
 (17, 17, 'Khan\'s Kitchen', 'emad', 'asfa', 'asdas', 544, 'Completed', 'a', '2025-01-21 20:08:30'),
-(18, 18, 'Khan\'s Kitchen', 'emad', '123', '1321', 1095, 'Completed', 'a', '2025-01-21 20:09:23');
+(18, 18, 'Khan\'s Kitchen', 'emad', '123', '1321', 1095, 'Completed', 'a', '2025-01-21 20:09:23'),
+(19, 21, 'Khan\'s Kitchen', 'emad', '123', '456', 4, 'Completed', 'a', '2025-01-25 14:44:16');
 
 -- --------------------------------------------------------
 
@@ -140,13 +141,13 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `restaurant_name`, `customer_name`, `total_price`, `phone_number`, `room_number`, `order_date`, `status`) VALUES
 (11, 'Khan\'s Kitchen', 'emad', 614, '123', '123', '2025-01-18 15:45:49', 'Completed'),
-(12, 'Olympia Cafe', 'emad', 54, '43', '43', '2025-01-18 15:45:56', 'Pending'),
 (13, 'Khan\'s Kitchen', 'emad', 70, 'g', 'tr', '2025-01-18 15:46:55', 'Completed'),
 (14, 'Khan\'s Kitchen', 'emad', 140, '12', '31', '2025-01-18 15:47:09', 'Completed'),
 (15, 'Khan\'s Kitchen', 'emad', 70, '1233', '432342', '2025-01-20 21:59:08', 'Completed'),
 (16, 'Khan\'s Kitchen', 'emad', 1088, '545', '543', '2025-01-20 22:01:10', 'Completed'),
 (17, 'Khan\'s Kitchen', 'emad', 544, 'asfa', 'asdas', '2025-01-21 20:08:30', 'Completed'),
-(18, 'Khan\'s Kitchen', 'emad', 1095, '123', '1321', '2025-01-21 20:09:23', 'Completed');
+(18, 'Khan\'s Kitchen', 'emad', 1095, '123', '1321', '2025-01-21 20:09:23', 'Completed'),
+(21, 'Khan\'s Kitchen', 'emad', 4, '123', '456', '2025-01-25 14:44:16', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -169,14 +170,14 @@ CREATE TABLE `order_details` (
 INSERT INTO `order_details` (`id`, `order_id`, `food_name`, `quantity`, `price_per_unit`) VALUES
 (13, 11, 'samosa', 1, 70),
 (14, 11, 'Steak', 1, 544),
-(15, 12, 'random', 1, 54),
 (16, 13, 'samosa', 1, 70),
 (17, 14, 'samosa', 2, 70),
 (18, 15, 'samosa', 1, 70),
 (19, 16, 'Steak', 2, 544),
 (20, 17, 'Steak', 1, 544),
 (21, 18, 'asdas', 1, 3),
-(22, 18, 'random', 2, 546);
+(22, 18, 'random', 2, 546),
+(23, 21, 'asd', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -368,25 +369,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `check_for_rider`
 --
 ALTER TABLE `check_for_rider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `owners`
