@@ -196,7 +196,7 @@ $conn->close();
                     </div>
                 <?php else : ?>
                     <!-- Display message if cart is empty -->
-                    <p>Your cart is empty!</p>
+                    <p style="margin-top:30px; font-size:20px;">Your cart is empty!</p>
                 <?php endif; ?>
             </div>
         </div>
