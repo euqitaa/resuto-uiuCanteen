@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2025 at 03:09 PM
+-- Generation Time: Jan 25, 2025 at 08:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -233,7 +233,7 @@ INSERT INTO `restaurants` (`id`, `restaurant_name`, `food_name`, `food_quantity`
 (25, 'Uiu Cafe', 'burger', 2, '../resources/images (2).jpeg', 76, 'Available', 'Dinner'),
 (26, 'Uiu Cafe', 'Samosa', 6, '../resources/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg', 6, 'Available', 'Snacks'),
 (27, 'Khan\'s Kitchen', 'asd', 4, '../resources/images.jpeg', 4, 'Available', 'Snacks'),
-(28, 'Khan\'s Kitchen', 'asdas', 1, '../resources/food-truck-indulgence-pork-burger-topped-with-cheese-paired-with-fries-ai-generated-photo.jpg', 3, 'Available', 'Snacks'),
+(28, 'Khan\'s Kitchen', 'asdas', 6, '../resources/food-truck-indulgence-pork-burger-topped-with-cheese-paired-with-fries-ai-generated-photo.jpg', 3, 'Not Available', 'Snacks'),
 (29, 'Khan\'s Kitchen', 'random', 18, '../resources/170206165040-dubai-michelin-dining-boca.jpg', 546, 'Available', 'Snacks');
 
 -- --------------------------------------------------------
