@@ -4,8 +4,10 @@
     font-family: sans-serif;
 }
 body{
-    background-color: #f1f3f4;
+    background-image: url('..\resources\pexels-pixabay-326281.jpg'); 
+    /*background-color: #f1f3f4;
     -webkit-font-smoothing : antialiased;
+    */
     font-family: sans-serif;
 }
 li{
