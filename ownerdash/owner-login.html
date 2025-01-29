@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Owner Login</title>
+    <link rel="stylesheet" href="../home/login-register.css">
+    <style>
+        /* Pop-up notification styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336; /* Red for errors */
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .popup.success {
+            background-color: #4CAF50; /* Green for success */
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <h1>Owner Login</h1>
+            <form action="owner-login.php" method="POST">
+                <div class="textbox-parent">
+                    <div class="textbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <input type="submit" class="btn" value="Login">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Pop-up notification -->
+    <div class="popup" id="popup"></div>
+
+    <script>
+        // Check the URL for query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        // Get the pop-up element
+        const popup = document.getElementById('popup');
+
+        if (error) {
+            // Display error messages based on the error code
+            if (error === 'invalidcredentials') {
+                popup.textContent = 'Invalid username or password.';
+            } else if (error === 'emptyfields') {
+                popup.textContent = 'Please fill in all fields.';
+            }
+
+            // Show the error pop-up
+            popup.style.display = 'block';
+
+            // Hide the pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

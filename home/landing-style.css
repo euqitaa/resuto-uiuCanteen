@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", sans-serif;
+}
+body {
+  background-color: #fdf2e9;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Rubik", sans-serif;
+}
+li {
+  list-style: none;
+}
+.nav-top {
+  padding: 0rem 5rem 1rem 5rem;
+  align-self: center;
+}
+.nav-list {
+  height: 10vh;
+  background-color: white;
+  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-item {
+  margin-right: 2rem;
+  font-size: 18px;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #1b1f46;
+  opacity: 1;
+  transition: all 200ms ease-in;
+}
+.nav-item a:hover {
+  background-color: #edcab650;
+  border: none;
+  color: #fe421b;
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-thickness: 5px;
+}
+.nav-logo {
+  text-decoration: none;
+  color: #fe421b;
+  text-shadow: 0 0 0.2rem #fe421b;
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+  font-size: 28px;
+  margin-right: auto;
+  margin-left: 2rem;
+  transition: ease-in-out;
+  transition-duration: 200ms;
+}
+.nav-logo:hover {
+  color: #1b1f46;
+  text-shadow: 0 0 0.2rem #1b1f46;
+  border: none;
+  opacity: 1;
+}
+/* info text in left */
+#info {
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
+/* info text style ends */
+.maindiv {
+  margin: 1rem;
+  padding: 1rem 2rem;
+}
+.content {
+  display: grid;
+  grid-template-columns: 50% auto;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.content .content-left {
+  display: block;
+  width: 100%;
+}
+
+.content .content-left .info {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.content .content-left .info h2 {
+  font-size: 60px;
+  font-family: sans-serif;
+  margin-bottom: 30px;
+}
+#exp-canteen,
+#exp-canteen:link,
+#exp-canteen:visited {
+  display: inline-block;
+
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1.6rem 3.2rem;
+  border-radius: 9px;
+
+  /* Only necessary for .btn */
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+
+  /* Put transition on original "state" */
+  /* transition: background-color 0.3s; */
+  transition: all 0.3s;
+  background-color: #fe421b;
+  color: #fdf2e9;
+  align-self: end;
+  padding: 1.2rem;
+}
+#exp-canteen:hover {
+  background-color: #1b1f46;
+  color: white;
+}
+.grid {
+  margin: 2rem;
+  margin-right: auto;
+  padding: 1rem 3rem;
+  background-color: #fdf2e9;
+}
+.content-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.restaurantslist {
+  display: flex;
+  background-color: white;
+  height: 20vh;
+  width: 25vw;
+  border: solid 1px #fdf2e9;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.restaurantslist img {
+  margin: 2rem 1rem;
+  float: left;
+  width: 40%;
+  height: auto; /*20%;*/
+  border-radius: 0.5rem;
+  object-fit: contain;
+}
+
+.restaurantslist p {
+  font-size: 20px;
+  font-family: "Rubik", sans-serif;
+  object-fit: contain;
+}
+
+/* Define animation for when restaurantslist is clicked */
+.restaurantslist:active {
+  transform: scale(0.95); /* Slight compression */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border-color: #fe421b; /* Visual feedback */
+}
+.restaurantslist:hover {
+  transform: scale(1.02); /* Slight enlargement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border-color: #edcab6; /* Subtle border color change */
+}

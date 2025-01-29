@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レスト - Login</title>
+    <link rel="stylesheet" href="login-register.css">
+    <style>
+        /* Pop-up notification styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336; /* Red for errors */
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .popup.success {
+            background-color: #4CAF50; /* Green for success */
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <h1>Login . <span class="res-name">レスト</span></h1>
+            <form action="login.php" method="POST">
+                <div class="textbox-parent">
+                    <div class="textbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <input type="submit" class="btn" value="Login">
+                </div>
+            </form>
+            <a href="register.html">Don't have an account? Register</a>
+        </div>
+    </section>
+
+    <!-- Pop-up notification -->
+    <div class="popup" id="popup"></div>
+
+    <script>
+        // Check the URL for query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+
+        // Get the pop-up element
+        const popup = document.getElementById('popup');
+
+        if (error) {
+            // Display error messages based on the error code
+            if (error === 'emptyfields') {
+                popup.textContent = 'Please fill in all fields.';
+            } else if (error === 'invalidcredentials') {
+                popup.textContent = 'Invalid username or password.';
+            }
+
+            // Show the error pop-up
+            popup.style.display = 'block';
+
+            // Hide the pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+
+        if (success === 'registered') {
+            // Display success message
+            popup.textContent = 'Registration successful! You can now login.';
+            popup.classList.add('success');
+            popup.style.display = 'block';
+
+            // Hide the success pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

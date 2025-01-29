@@ -1,0 +1,212 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", sans-serif;
+}
+body {
+  background-color: #fdf2e9;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Rubik", sans-serif;
+}
+.div_middle{
+  width: 60vw;
+  margin-left: 18vw;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+.nav-top {
+  padding: 0rem 5rem 1rem 5rem;
+  align-self: center;
+}
+.nav-list {
+  background-color: white;
+  box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 1rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-item {
+  margin-right: 2rem;
+  font-size: 18px;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #1b1f46;
+  opacity: 1;
+  transition: all 200ms ease-in;
+}
+.nav-item a:hover {
+  background-color: #edcab650;
+  border: none;
+  color: #fe421b;
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-thickness: 5px;
+}
+.nav-logo {
+  text-decoration: none;
+  color: #fe421b;
+  text-shadow: 0 0 0.2rem #fe421b;
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+  font-size: 28px;
+  margin-right: auto;
+  margin-left: 2rem;
+  transition: ease-in-out;
+  transition-duration: 200ms;
+}
+.nav-logo:hover {
+  color: #1b1f46;
+  text-shadow: 0 0 0.2rem #1b1f46;
+  border: none;
+  opacity: 1;
+}
+.restaurant-items {
+  padding: 15px 0px;
+  box-shadow: 0 0 10rem rgba(43, 49, 133, 0.08);
+}
+.restaurant-items-list-freq {
+  height: fit-content;
+  border: none;
+  display: flexbox;
+  border-color: gray;
+}
+.food-item-button {
+  height: 18dvh;
+  width: 36vw;
+  max-width: 400px;
+  border: 1px;
+  border-style: solid;
+  border-color: rgba(254, 65, 0, 0.3);
+  border-radius: 12px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: box-shadow 0.3s, background-color 0.3s;
+}
+.food-item-button:hover {
+  background-color: rgba(254, 65, 25, 0.1);
+  box-shadow: 0 0 18px rgba(254, 65, 25, 0.6);
+}
+.restaurant-name-parent {
+  background-color: white;
+  height: 245px;
+  display: flex;
+  padding: 2rem;
+  border-bottom-width: 1px;
+  border-bottom-color: #1b1f46;
+}
+.restaurant-name {
+  height: 240px;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  margin-left: 100px;
+}
+#res-name-text {
+  margin-right: 2rem;
+  margin-left: 1rem;
+  font-family: "Rubik", sans-serif;
+  font-size: 32px;
+  align-items: right;
+  padding: 1rem;
+  position: inherit;
+}
+.restaurant-logo {
+  margin-left: 2rem;
+  height: 160px;
+  width: 160px;
+}
+.restaurant-logo img {
+  height: 160px;
+  width: 160px;
+}
+.res-info {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.whole-page {
+  padding: 0rem 10rem;
+  max-width: 90vw;
+  align-items: center;
+}
+.food-items {
+  padding-top: 1rem;
+}
+.addfoodbutton {
+  justify-content: right;
+  margin-bottom: 10px;
+}
+.food-item-button-left {
+  justify-content: left;
+  flex-direction: row;
+}
+.food-item-button-right {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+.foodname {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+.foodprice {
+  font-size: 18px;
+  font-weight: light;
+  opacity: 0.8;
+  text-align: left;
+  padding: 0rem 1rem;
+}
+.fooditemlist {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.fooditemlistthing {
+  padding: 0.5rem;
+}
+.addbutton {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 94, 0, 0.6);
+  font-size: 14px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, background-color 0.3s;
+}
+.addbutton:hover {
+  background-color: rgba(254, 65, 25, 0.8);
+  color: white;
+  box-shadow: 0 0 10px rgba(254, 65, 25, 0.8);
+}
+.res-avail {
+  text-shadow: 0 0 1px rgba(255, 94, 0, 0.6);
+  padding: 0rem 2rem;
+}
+.div-foodimage {
+  height: 128px;
+  width: 128px;
+}
+.div-foodimage img {
+  height: 128px;
+  width: 128px;
+  object-fit: contain;
+}

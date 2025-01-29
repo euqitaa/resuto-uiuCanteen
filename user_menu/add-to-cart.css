@@ -1,0 +1,88 @@
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #1b1f46;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%; /* Ensure full width */
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+img {
+    display: block;
+    margin: 10px auto 15px auto; /* Adjust spacing above and below the image */
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #1b1f46;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #fe4119;
+    box-shadow: 0 8px 20px rgba(254, 65, 25, 0.8);
+}
+
+button.full-width {
+    width: calc(100% - 20px); /* Ensure buttons are equal width with consistent padding */
+    margin: 10px auto;
+}
+
+a.btn.cancel {
+    display: block;
+    text-align: center;
+    background-color: #f4f4f4;
+    color: #1b1f46;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+a.btn.cancel:hover {
+    background-color: #d1d1d1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    box-sizing: border-box;
+}

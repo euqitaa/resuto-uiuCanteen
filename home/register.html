@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レスト - Register</title>
+    <link rel="stylesheet" href="login-register.css">
+    <style>
+        /* Pop-up notification styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f44336; /* Red for errors */
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .popup.success {
+            background-color: #4CAF50; /* Green for success */
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="login-box">
+            <h1>Register . <span class="res-name">レスト</span></h1>
+            <form id="registerForm" action="register.php" method="POST">
+                <div class="textbox-parent">
+                    <div class="textbox">
+                        <input type="text" id="uniId" name="uniId" placeholder="University ID" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+                    </div>
+                    <input type="submit" class="btn" value="Register">
+                </div>
+            </form>
+            <a href="login.html">Already have an account? Login</a>
+        </div>
+    </section>
+
+    <!-- Pop-up notification -->
+    <div class="popup" id="popup"></div>
+
+    <script>
+        // University ID validation
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            const uniId = document.getElementById("uniId").value;
+            const regex = /^[0-9]+$/; // Regex for numbers only
+
+            if (!regex.test(uniId)) {
+                // Prevent form submission
+                event.preventDefault();
+
+                // Show pop-up error message
+                const popup = document.getElementById("popup");
+                popup.textContent = "University ID must be numeric.";
+                popup.style.display = "block";
+
+                // Hide pop-up after 3 seconds
+                setTimeout(() => {
+                    popup.style.display = "none";
+                }, 3000);
+            }
+        });
+
+        // Check the URL for query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+
+        // Get the pop-up element
+        const popup = document.getElementById('popup');
+
+        if (error) {
+            // Display error messages based on the error code
+            if (error === 'emptyfields') {
+                popup.textContent = 'All fields are required.';
+            } else if (error === 'passwordmismatch') {
+                popup.textContent = 'Passwords do not match.';
+            } else if (error === 'userexists') {
+                popup.textContent = 'Username already exists. Choose another.';
+            } else if (error === 'dberror') {
+                popup.textContent = 'An error occurred. Please try again later.';
+            }
+
+            // Show the pop-up
+            popup.style.display = 'block';
+
+            // Hide the pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+
+        if (success === 'registered') {
+            // Display success message
+            popup.textContent = 'Registration successful! You can now login.';
+            popup.classList.add('success');
+            popup.style.display = 'block';
+
+            // Hide the pop-up after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

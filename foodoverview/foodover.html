@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodname - Restaurant Name - UIUEATS</title>
+    <link rel="stylesheet" href="foodoverstyle.css">
+</head>
+
+<body>
+    <section id="food-overview-main">
+        <div class="foodimg">
+            <img src="..\resources\samosa.png" alt="">
+        </div>
+
+        <div class="foodinfoparent">
+            <div class="foodinfo">
+                <h1>Samosa</h1>
+                <h3>10 Tk</h3>
+
+            </div>
+            <div class="quantityselect">
+                <div class="quantity">
+                    <button class="minus" aria-label="Decrease">&minus;</button>
+                    <input type="number" class="input-box" value="1" min="1" max="10">
+                    <button class="plus" aria-label="Increase">&plus;</button>
+                </div>
+            </div>
+        </div>
+        <div class="fooddescription">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro distinctio, rerum vero illum, quisquam
+            voluptatum praesentium molestiae quaerat pariatur rem blanditiis perferendis. Ad possimus nemo maxime quod
+            enim natus quis.
+        </div>
+        <div class="foodaddons">
+            <h4>Food Addons</h4>
+            <label><input type="radio" name="e"> Sauce</label>
+            <label><input type="radio" name="e"> Salt</label>
+            <label><input type="radio" name="e" disabled> Cucumber</label>
+
+        </div>
+        <div class="foodoverbottom">
+            <button id="addtocart"> 🛒➕ Add to Cart </button>
+        </div>
+
+
+    </section>
+
+</body>
+
+</html>

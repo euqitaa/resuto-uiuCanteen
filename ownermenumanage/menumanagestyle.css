@@ -1,0 +1,301 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    -webkit-font-smoothing: antialiased;
+    font-family: sans-serif;
+}
+li{
+    list-style: none;
+}
+.container {
+    width: 100%;
+    height: 100vh;
+    background-color: #f1f3f4;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 15%;
+    background-color: #1b1f46;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.branding{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fe4119;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+.company-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.sidebar-buttons {
+    width: 100%;
+}
+
+.sidebar-btn{
+    width: 100%;
+    background-color: #303669;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 0.5em;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar-btn:hover{
+    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
+}
+
+.support-btn{
+    width: 100%;
+    background-color: #10196eb7;
+    color: white;
+    border: none;
+    border-radius: 0.5em;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 1rem;
+    justify-content: flex-end;
+    align-items:end ;
+}
+.sidebar-support{
+    width: 100%;
+}
+.sidebar:last-child{
+    margin-top: auto;
+    justify-content: flex-end;
+}
+
+.content {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    justify-content: center;
+}
+.foodlistparent{
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    height: 90vh;
+    width: 50%;
+}
+.foodlist{
+    display: flex;
+    flex-direction: column;
+}
+.foodlist img {
+    object-fit: cover; /* Ensures the image fills the area without distortion */
+    display: block; /* Ensures the image is treated as a block-level element */
+    margin: 0 auto; /* Centers the image horizontally */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    border: 1px solid #ccc; /* Optional: Adds a subtle border around the image */
+}
+
+.box {
+	display: flex;
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+	margin-bottom: 20px;
+	background: #fff;
+	transition: all .6s ease;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+}
+.box:hover {
+	border: none;
+	transform: scale(1.01);
+}
+.box img {
+	width: 300px;
+	height: 200px;
+	object-fit: cover;
+}
+.content {
+	padding: 20px;
+	width: 100%;
+	position: relative;
+}
+.content h3 {
+	margin-bottom: 10px;
+}
+.content h4 {
+    opacity: 0.7;
+	margin-bottom: 0px;
+}
+.quantityselect {
+    float: left;
+}
+
+.quantity {
+    width: 6rem;
+    display: flex;
+    border: 2px solid #1b1f46;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quantity button {
+    background-color: #1b1f46;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 30px;
+    height: auto;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.quantity button:hover {
+    background-color: #2b3185;
+}
+
+.input-box {
+    width: 40px;
+    text-align: center;
+    border: none;
+    padding: 8px 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Hide the number input spin buttons */
+.input-box::-webkit-inner-spin-button,
+.input-box::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.mng-btn{
+    background-color: #1b1f46;
+    padding: 1rem;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+}
+.mng-btn-right{
+    float: right;
+}
+
+.open-modal-btn{
+    margin-top: 10px;
+    background-color: #1b1f46;
+    padding: 1rem;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it appears above other elements */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%; /* Responsive design for smaller screens */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #1b1f46; /* Consistent with the branding color */
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.modal-content select {
+    background-color: #f9f9f9;
+}
+
+.modal-content button {
+    background-color: #1b1f46;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #fe4119;
+}
+
+.close-btn {
+    background-color: #fe4119;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #ff6b4d;
+}
+
+/* Animation for the modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
